@@ -9,11 +9,14 @@ defmodule Day01 do
     end)
   end
 
+  defp zero_score(0, zeroes), do: zeroes + 1
+  defp zero_score(_, zeroes), do: zeroes
+
   def part1(steps) do
     steps
     |> List.foldl({50, 0}, fn step, {position, zeroes} ->
       new_position = Integer.mod(position + step, 100)
-      {new_position, zeroes + if(new_position == 0, do: 1, else: 0)}
+      {new_position, zero_score(new_position, zeroes)}
     end)
     |> elem(1)
   end
