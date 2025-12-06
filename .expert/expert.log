@@ -1,0 +1,1603 @@
+13:50:48.779 [debug] Child {XPLoggerFileBackend, :general_log} of Supervisor Logger.Backends.Supervisor started
+Pid: #PID<0.102.0>
+Start Call: Logger.Backends.Watcher.start_link({{XPLoggerFileBackend, :general_log}, {XPLoggerFileBackend, :general_log}})
+Restart: :transient
+Shutdown: 5000
+Type: :worker
+13:50:48.779 [info] Child Logger.Backends.Supervisor of Supervisor Logger.Backends.Internal started
+Pid: #PID<0.101.0>
+Start Call: Logger.Backends.Supervisor.start_link([{XPLoggerFileBackend, :general_log}])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.779 [info] Child Logger.Backends.Internal of Supervisor Logger.Supervisor started
+Pid: #PID<0.97.0>
+Start Call: Logger.Backends.Internal.start_link([])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.779 [info] Application logger started at :nonode@nohost
+13:50:48.779 [info] Application xp_mime started at :nonode@nohost
+13:50:48.779 [info] Application xp_hpax started at :nonode@nohost
+13:50:48.779 [info] Application crypto started at :nonode@nohost
+13:50:48.779 [info] Application asn1 started at :nonode@nohost
+13:50:48.779 [info] Application public_key started at :nonode@nohost
+13:50:48.783 [debug] Child :ssl_handler of Supervisor :logger_sup started
+Pid: #PID<0.107.0>
+Start Call: :logger_olp.start_link(:logger_std_h_ssl_handler, :logger_h_common, %{id: :ssl_handler, module: :logger_std_h, config: %{type: :standard_io, filesync_repeat_interval: :no_repeat}, level: :debug, filter_default: :stop, filters: [], formatter: {:ssl_logger, %{}}}, %{})
+Restart: :temporary
+Shutdown: 2000
+Type: :worker
+13:50:48.791 [info] Child :ssl_pem_cache of Supervisor :ssl_admin_sup started
+Pid: #PID<0.111.0>
+Start Call: :ssl_pem_cache.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:50:48.798 [info] Child :ssl_manager of Supervisor :ssl_admin_sup started
+Pid: #PID<0.112.0>
+Start Call: :ssl_manager.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:50:48.800 [info] Child :tls_client_ticket_store of Supervisor :ssl_admin_sup started
+Pid: #PID<0.113.0>
+Start Call: :tls_client_ticket_store.start_link(1000, 7200)
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:50:48.800 [info] Child :ssl_admin_sup of Supervisor :ssl_sup started
+Pid: #PID<0.110.0>
+Start Call: :ssl_admin_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.804 [info] Child :tls_connection_sup of Supervisor :tls_sup started
+Pid: #PID<0.116.0>
+Start Call: :tls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.806 [info] Child :ssl_listen_tracker_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.118.0>
+Start Call: :ssl_listen_tracker_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.808 [info] Child :tls_server_session_ticket of Supervisor :tls_server_sup started
+Pid: #PID<0.119.0>
+Start Call: :tls_server_session_ticket_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.809 [info] Child :ssl_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.120.0>
+Start Call: :ssl_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.811 [info] Child :ssl_upgrade_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.121.0>
+Start Call: :ssl_upgrade_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.811 [info] Child :tls_server_sup of Supervisor :tls_sup started
+Pid: #PID<0.117.0>
+Start Call: :tls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.811 [info] Child :tls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.115.0>
+Start Call: :tls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.814 [info] Child :dtls_connection_sup of Supervisor :dtls_sup started
+Pid: #PID<0.123.0>
+Start Call: :dtls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.816 [info] Child :dtls_listener_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.125.0>
+Start Call: :dtls_listener_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.819 [info] Child :dtls_server_session_cache_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.126.0>
+Start Call: :dtls_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.819 [info] Child :dtls_server_sup of Supervisor :dtls_sup started
+Pid: #PID<0.124.0>
+Start Call: :dtls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.819 [info] Child :dtls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.122.0>
+Start Call: :dtls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.819 [info] Child :ssl_connection_sup of Supervisor :ssl_sup started
+Pid: #PID<0.114.0>
+Start Call: :ssl_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:50:48.819 [info] Application ssl started at :nonode@nohost
+13:50:48.820 [info] Application xp_mint started at :nonode@nohost
+13:50:48.820 [info] Application xp_nimble_options started at :nonode@nohost
+13:50:48.826 [info] Child XPNimblePool.TaskSupervisor of Supervisor #PID<0.132.0> (Supervisor.Default) started
+Pid: #PID<0.133.0>
+Start Call: Task.Supervisor.start_link([name: XPNimblePool.TaskSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.826 [info] Application xp_nimble_pool started at :nonode@nohost
+13:50:48.829 [info] Child :telemetry_handler_table of Supervisor :telemetry_sup started
+Pid: #PID<0.137.0>
+Start Call: :telemetry_handler_table.start_link()
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.830 [info] Application xp_telemetry started at :nonode@nohost
+13:50:48.830 [info] Application xp_finch started at :nonode@nohost
+13:50:48.862 [info] Child XPReq.Finch.PIDPartition0 of Supervisor XPReq.Finch started
+Pid: #PID<0.143.0>
+Start Call: Registry.Partition.start_link(XPReq.Finch.PIDPartition0, {:duplicate, XPReq.Finch, 0, 1, XPReq.Finch.KeyPartition0, XPReq.Finch.PIDPartition0, [], false})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.863 [info] Child XPReq.Finch of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.142.0>
+Start Call: Registry.start_link([keys: :duplicate, name: XPReq.Finch, meta: [config: %{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}}]])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.863 [info] Child XPReq.Finch.PoolSupervisor of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.144.0>
+Start Call: DynamicSupervisor.start_link([name: XPReq.Finch.PoolSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.863 [info] Child XPFinch.PoolManager of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.145.0>
+Start Call: XPFinch.PoolManager.start_link(%{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.863 [info] Child XPReq.Finch of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.141.0>
+Start Call: XPFinch.start_link([name: XPReq.Finch, pools: %{default: [protocols: [:http1]]}])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.863 [info] Child XPReq.FinchSupervisor of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.146.0>
+Start Call: DynamicSupervisor.start_link([strategy: :one_for_one, name: XPReq.FinchSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.863 [info] Child XPReq.Test.Ownership of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.147.0>
+Start Call: XPReq.Test.Ownership.start_link([name: XPReq.Test.Ownership])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.863 [info] Application xp_req started at :nonode@nohost
+13:50:48.863 [info] Application burrito started at :nonode@nohost
+13:50:48.863 [info] Application xp_schematic started at :nonode@nohost
+13:50:48.863 [info] Application xp_typed_struct started at :nonode@nohost
+13:50:48.863 [info] Application xp_gen_lsp started at :nonode@nohost
+13:50:48.889 [info] Child XPSnowflake.Generator of Supervisor #PID<0.150.0> (Supervisor.Default) started
+Pid: #PID<0.151.0>
+Start Call: XPSnowflake.Generator.start_link(0, 1023)
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.889 [info] Application xp_snowflake started at :nonode@nohost
+13:50:48.889 [info] Application xp_sourceror started at :nonode@nohost
+13:50:48.889 [info] Application xp_forge started at :nonode@nohost
+13:50:48.889 [info] Application xp_logger_file_backend started at :nonode@nohost
+13:50:48.897 [info] Child :ttb_autostart of Supervisor :runtime_tools_sup started
+Pid: #PID<0.155.0>
+Start Call: :ttb_autostart.start_link()
+Restart: :temporary
+Shutdown: 3000
+Type: :worker
+13:50:48.897 [info] Application runtime_tools started at :nonode@nohost
+13:50:48.897 [info] Application et started at :nonode@nohost
+13:50:48.897 [info] Application observer started at :nonode@nohost
+13:50:48.897 [info] Application xp_path_glob started at :nonode@nohost
+13:50:48.920 [info] Starting NodePortMapper on nonode@nohost
+13:50:48.920 [info] Child XPForge.NodePortMapper of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.159.0>
+Start Call: XPForge.NodePortMapper.start_link([])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.922 [info] Child XPForge.Document.Store of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.160.0>
+Start Call: XPForge.Document.Store.start_link([derive: [analysis: &XPForge.Ast.analyze/1]])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.923 [info] Child XPExpert.ProjectSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.161.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.ProjectSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.923 [info] Child XPExpert.DynamicSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.162.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.DynamicSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.926 [info] Child XPGenLSP.Assigns of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.163.0>
+Start Call: XPGenLSP.Assigns.start_link([name: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.926 [info] Child :expert_task_queue of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.164.0>
+Start Call: Task.Supervisor.start_link([name: :expert_task_queue])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:50:48.927 [info] Child XPGenLSP.Buffer of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.165.0>
+Start Call: XPGenLSP.Buffer.start_link([name: XPExpert.Buffer])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:48.927 [debug] [name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns]
+13:50:48.935 [info] Child XPExpert of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.166.0>
+Start Call: XPExpert.start_link([name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 500
+Type: :worker
+13:50:48.935 [info] Application xp_expert started at :nonode@nohost
+13:50:49.071 [info] Starting project at uri file:///d%3A/Repos/adventofcode2025
+13:50:49.090 [info] Child {XPExpert.Project.Progress, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.171.0>
+Start Call: XPExpert.Project.Progress.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 59502})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:49.092 [info] Child {XPExpert.EngineSupervisor, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.172.0>
+Start Call: XPExpert.EngineSupervisor.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 59502})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:49.098 [debug] sent request server -> client window/workDoneProgress/create
+13:50:49.103 [info] Child XPForge.EPMD of Supervisor :net_sup started
+Pid: #PID<0.175.0>
+Start Call: XPForge.EPMD.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:50:49.105 [info] Child :auth of Supervisor :net_sup started
+Pid: #PID<0.176.0>
+Start Call: :auth.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:50:49.114 [debug] sent notification server -> client $/progress
+13:50:49.169 [debug] handled request client -> server initialize in 218ms
+13:50:49.174 [debug] sent request server -> client client/registerCapability
+13:50:49.184 [info] Opened file:///D:/Repos/adventofcode2025/lib/adventofcode2025.ex
+13:50:49.184 [debug] handled notification client -> server textDocument/didOpen in 14ms
+13:50:49.190 [debug] handled notification client -> server initialized in 20ms
+13:50:51.187 [info] Child :net_kernel of Supervisor :net_sup started
+Pid: #PID<0.177.0>
+Start Call: :net_kernel.start_link(%{name: :"expert-manager-adventofcode2025-59502@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:50:51.188 [debug] Child :net_sup_dynamic of Supervisor :kernel_sup started
+Pid: #PID<0.174.0>
+Start Call: :erl_distribution.start_link(%{name: :"expert-manager-adventofcode2025-59502@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 1000
+Type: :supervisor
+13:50:51.201 [debug] sent notification server -> client $/progress
+13:50:51.201 [error] Process #PID<0.173.0> terminating
+** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+    (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+    (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Initial Call: XPExpert.Project.Node.init/1
+Ancestors: [:"adventofcode2025::supervisor", XPExpert.ProjectSupervisor, XPExpert.Supervisor, #PID<0.157.0>]
+Message Queue Length: 0
+Messages: []
+Links: [#PID<0.170.0>]
+Dictionary: []
+Trapping Exits: false
+Status: :running
+Heap Size: 1598
+Stack Size: 29
+Reductions: 4475
+13:50:51.210 [error] Child {XPExpert.Project.Node, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" failed to start
+** (exit) an exception was raised:
+    ** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+        (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+        (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Start Call: XPExpert.Project.Node.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 59502})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:50:51.211 [error] Task #PID<0.169.0> started from #PID<0.168.0> terminating
+** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+    (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function<3.104070401/0 in XPExpert.State.initialize/2>
+    Args: []
+13:50:51.215 [error] Child :undefined of Supervisor :expert_task_queue terminated
+** (exit) an exception was raised:
+    ** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+        (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+        (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Pid: #PID<0.169.0>
+Start Call: Task.Supervised.start_link/?
+Restart: :temporary
+Shutdown: 5000
+Type: :worker
+13:50:52.261 [debug] sent notification server -> client window/logMessage
+13:50:52.266 [debug] handled request client -> server textDocument/hover in 19ms
+13:50:54.030 [info] Child of Supervisor :inet_gethost_native_sup started
+Pid: #PID<0.187.0>
+Start Call: :inet_gethost_native.init([])
+13:50:54.030 [debug] Child :inet_gethost_native_sup of Supervisor :kernel_safe_sup started
+Pid: #PID<0.186.0>
+Start Call: :inet_gethost_native.start_link()
+Restart: :temporary
+Shutdown: 1000
+Type: :worker
+13:50:54.142 [debug] sent notification server -> client window/logMessage
+13:50:54.143 [debug] handled request client -> server textDocument/completion in 6ms
+13:50:54.418 [debug] sent notification server -> client window/logMessage
+13:50:54.418 [debug] handled request client -> server textDocument/completion in 205µs
+13:50:54.421 [debug] handled notification client -> server $/cancelRequest in 3ms
+13:50:56.120 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:50:56.120 [debug] sent notification server -> client window/logMessage
+13:50:56.120 [warning] client -> server notification crashed
+13:50:56.120 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:50:56.120 [debug] sent notification server -> client window/logMessage
+13:50:56.120 [warning] client -> server notification crashed
+13:50:56.120 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:50:56.120 [debug] sent notification server -> client window/logMessage
+13:50:56.121 [warning] client -> server notification crashed
+13:50:56.121 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:50:56.121 [debug] sent notification server -> client window/logMessage
+13:50:56.121 [warning] client -> server notification crashed
+13:51:03.336 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.336 [debug] sent notification server -> client window/logMessage
+13:51:03.336 [warning] client -> server notification crashed
+13:51:03.336 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.336 [debug] sent notification server -> client window/logMessage
+13:51:03.336 [warning] client -> server notification crashed
+13:51:03.336 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.336 [debug] sent notification server -> client window/logMessage
+13:51:03.336 [warning] client -> server notification crashed
+13:51:03.336 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.336 [debug] sent notification server -> client window/logMessage
+13:51:03.337 [warning] client -> server notification crashed
+13:51:03.337 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.337 [debug] sent notification server -> client window/logMessage
+13:51:03.337 [warning] client -> server notification crashed
+13:51:03.337 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:51:03.337 [debug] sent notification server -> client window/logMessage
+13:51:03.337 [warning] client -> server notification crashed
+13:57:19.979 [debug] sent notification server -> client window/logMessage
+13:57:19.980 [info] Shutting down
+13:57:19.980 [debug] handled request client -> server shutdown in 96ms
+13:59:04.856 [debug] Child {XPLoggerFileBackend, :general_log} of Supervisor Logger.Backends.Supervisor started
+Pid: #PID<0.102.0>
+Start Call: Logger.Backends.Watcher.start_link({{XPLoggerFileBackend, :general_log}, {XPLoggerFileBackend, :general_log}})
+Restart: :transient
+Shutdown: 5000
+Type: :worker
+13:59:04.857 [info] Child Logger.Backends.Supervisor of Supervisor Logger.Backends.Internal started
+Pid: #PID<0.101.0>
+Start Call: Logger.Backends.Supervisor.start_link([{XPLoggerFileBackend, :general_log}])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.857 [info] Child Logger.Backends.Internal of Supervisor Logger.Supervisor started
+Pid: #PID<0.97.0>
+Start Call: Logger.Backends.Internal.start_link([])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.857 [info] Application logger started at :nonode@nohost
+13:59:04.857 [info] Application xp_mime started at :nonode@nohost
+13:59:04.857 [info] Application xp_hpax started at :nonode@nohost
+13:59:04.857 [info] Application crypto started at :nonode@nohost
+13:59:04.857 [info] Application asn1 started at :nonode@nohost
+13:59:04.857 [info] Application public_key started at :nonode@nohost
+13:59:04.860 [debug] Child :ssl_handler of Supervisor :logger_sup started
+Pid: #PID<0.107.0>
+Start Call: :logger_olp.start_link(:logger_std_h_ssl_handler, :logger_h_common, %{id: :ssl_handler, module: :logger_std_h, config: %{type: :standard_io, filesync_repeat_interval: :no_repeat}, level: :debug, filter_default: :stop, filters: [], formatter: {:ssl_logger, %{}}}, %{})
+Restart: :temporary
+Shutdown: 2000
+Type: :worker
+13:59:04.868 [info] Child :ssl_pem_cache of Supervisor :ssl_admin_sup started
+Pid: #PID<0.111.0>
+Start Call: :ssl_pem_cache.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:59:04.873 [info] Child :ssl_manager of Supervisor :ssl_admin_sup started
+Pid: #PID<0.112.0>
+Start Call: :ssl_manager.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:59:04.875 [info] Child :tls_client_ticket_store of Supervisor :ssl_admin_sup started
+Pid: #PID<0.113.0>
+Start Call: :tls_client_ticket_store.start_link(1000, 7200)
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+13:59:04.875 [info] Child :ssl_admin_sup of Supervisor :ssl_sup started
+Pid: #PID<0.110.0>
+Start Call: :ssl_admin_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.878 [info] Child :tls_connection_sup of Supervisor :tls_sup started
+Pid: #PID<0.116.0>
+Start Call: :tls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.880 [info] Child :ssl_listen_tracker_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.118.0>
+Start Call: :ssl_listen_tracker_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.881 [info] Child :tls_server_session_ticket of Supervisor :tls_server_sup started
+Pid: #PID<0.119.0>
+Start Call: :tls_server_session_ticket_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.883 [info] Child :ssl_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.120.0>
+Start Call: :ssl_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.884 [info] Child :ssl_upgrade_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.121.0>
+Start Call: :ssl_upgrade_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.884 [info] Child :tls_server_sup of Supervisor :tls_sup started
+Pid: #PID<0.117.0>
+Start Call: :tls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.884 [info] Child :tls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.115.0>
+Start Call: :tls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.886 [info] Child :dtls_connection_sup of Supervisor :dtls_sup started
+Pid: #PID<0.123.0>
+Start Call: :dtls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.888 [info] Child :dtls_listener_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.125.0>
+Start Call: :dtls_listener_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.890 [info] Child :dtls_server_session_cache_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.126.0>
+Start Call: :dtls_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.890 [info] Child :dtls_server_sup of Supervisor :dtls_sup started
+Pid: #PID<0.124.0>
+Start Call: :dtls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.890 [info] Child :dtls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.122.0>
+Start Call: :dtls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.890 [info] Child :ssl_connection_sup of Supervisor :ssl_sup started
+Pid: #PID<0.114.0>
+Start Call: :ssl_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+13:59:04.890 [info] Application ssl started at :nonode@nohost
+13:59:04.891 [info] Application xp_mint started at :nonode@nohost
+13:59:04.891 [info] Application xp_nimble_options started at :nonode@nohost
+13:59:04.896 [info] Child XPNimblePool.TaskSupervisor of Supervisor #PID<0.132.0> (Supervisor.Default) started
+Pid: #PID<0.133.0>
+Start Call: Task.Supervisor.start_link([name: XPNimblePool.TaskSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.896 [info] Application xp_nimble_pool started at :nonode@nohost
+13:59:04.900 [info] Child :telemetry_handler_table of Supervisor :telemetry_sup started
+Pid: #PID<0.137.0>
+Start Call: :telemetry_handler_table.start_link()
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.900 [info] Application xp_telemetry started at :nonode@nohost
+13:59:04.900 [info] Application xp_finch started at :nonode@nohost
+13:59:04.933 [info] Child XPReq.Finch.PIDPartition0 of Supervisor XPReq.Finch started
+Pid: #PID<0.143.0>
+Start Call: Registry.Partition.start_link(XPReq.Finch.PIDPartition0, {:duplicate, XPReq.Finch, 0, 1, XPReq.Finch.KeyPartition0, XPReq.Finch.PIDPartition0, [], false})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.933 [info] Child XPReq.Finch of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.142.0>
+Start Call: Registry.start_link([keys: :duplicate, name: XPReq.Finch, meta: [config: %{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}}]])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.934 [info] Child XPReq.Finch.PoolSupervisor of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.144.0>
+Start Call: DynamicSupervisor.start_link([name: XPReq.Finch.PoolSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.934 [info] Child XPFinch.PoolManager of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.145.0>
+Start Call: XPFinch.PoolManager.start_link(%{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.934 [info] Child XPReq.Finch of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.141.0>
+Start Call: XPFinch.start_link([name: XPReq.Finch, pools: %{default: [protocols: [:http1]]}])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.934 [info] Child XPReq.FinchSupervisor of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.146.0>
+Start Call: DynamicSupervisor.start_link([strategy: :one_for_one, name: XPReq.FinchSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:04.934 [info] Child XPReq.Test.Ownership of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.147.0>
+Start Call: XPReq.Test.Ownership.start_link([name: XPReq.Test.Ownership])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.934 [info] Application xp_req started at :nonode@nohost
+13:59:04.934 [info] Application burrito started at :nonode@nohost
+13:59:04.934 [info] Application xp_schematic started at :nonode@nohost
+13:59:04.934 [info] Application xp_typed_struct started at :nonode@nohost
+13:59:04.934 [info] Application xp_gen_lsp started at :nonode@nohost
+13:59:04.965 [info] Child XPSnowflake.Generator of Supervisor #PID<0.150.0> (Supervisor.Default) started
+Pid: #PID<0.151.0>
+Start Call: XPSnowflake.Generator.start_link(0, 1023)
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:04.966 [info] Application xp_snowflake started at :nonode@nohost
+13:59:04.966 [info] Application xp_sourceror started at :nonode@nohost
+13:59:04.966 [info] Application xp_forge started at :nonode@nohost
+13:59:04.966 [info] Application xp_logger_file_backend started at :nonode@nohost
+13:59:04.976 [info] Child :ttb_autostart of Supervisor :runtime_tools_sup started
+Pid: #PID<0.155.0>
+Start Call: :ttb_autostart.start_link()
+Restart: :temporary
+Shutdown: 3000
+Type: :worker
+13:59:04.977 [info] Application runtime_tools started at :nonode@nohost
+13:59:04.977 [info] Application et started at :nonode@nohost
+13:59:04.977 [info] Application observer started at :nonode@nohost
+13:59:04.977 [info] Application xp_path_glob started at :nonode@nohost
+13:59:05.014 [info] Starting NodePortMapper on nonode@nohost
+13:59:05.014 [info] Child XPForge.NodePortMapper of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.159.0>
+Start Call: XPForge.NodePortMapper.start_link([])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.018 [info] Child XPForge.Document.Store of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.160.0>
+Start Call: XPForge.Document.Store.start_link([derive: [analysis: &XPForge.Ast.analyze/1]])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.021 [info] Child XPExpert.ProjectSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.161.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.ProjectSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:05.021 [info] Child XPExpert.DynamicSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.162.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.DynamicSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:05.025 [info] Child XPGenLSP.Assigns of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.163.0>
+Start Call: XPGenLSP.Assigns.start_link([name: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.025 [info] Child :expert_task_queue of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.164.0>
+Start Call: Task.Supervisor.start_link([name: :expert_task_queue])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+13:59:05.028 [info] Child XPGenLSP.Buffer of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.165.0>
+Start Call: XPGenLSP.Buffer.start_link([name: XPExpert.Buffer])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.028 [debug] [name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns]
+13:59:05.040 [info] Child XPExpert of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.166.0>
+Start Call: XPExpert.start_link([name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 500
+Type: :worker
+13:59:05.040 [info] Application xp_expert started at :nonode@nohost
+13:59:05.186 [info] Starting project at uri file:///d%3A/Repos/adventofcode2025
+13:59:05.205 [info] Child {XPExpert.Project.Progress, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.171.0>
+Start Call: XPExpert.Project.Progress.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 34714})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.208 [info] Child {XPExpert.EngineSupervisor, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.172.0>
+Start Call: XPExpert.EngineSupervisor.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 34714})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:05.215 [debug] sent request server -> client window/workDoneProgress/create
+13:59:05.221 [info] Child XPForge.EPMD of Supervisor :net_sup started
+Pid: #PID<0.175.0>
+Start Call: XPForge.EPMD.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:59:05.224 [info] Child :auth of Supervisor :net_sup started
+Pid: #PID<0.176.0>
+Start Call: :auth.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:59:05.233 [debug] sent notification server -> client $/progress
+13:59:05.309 [debug] handled request client -> server initialize in 251ms
+13:59:05.315 [debug] sent request server -> client client/registerCapability
+13:59:05.327 [info] Opened file:///D:/Repos/adventofcode2025/mix.exs
+13:59:05.327 [debug] handled notification client -> server textDocument/didOpen in 16ms
+13:59:05.334 [debug] handled notification client -> server initialized in 24ms
+13:59:07.300 [info] Child :net_kernel of Supervisor :net_sup started
+Pid: #PID<0.177.0>
+Start Call: :net_kernel.start_link(%{name: :"expert-manager-adventofcode2025-34714@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+13:59:07.300 [debug] Child :net_sup_dynamic of Supervisor :kernel_sup started
+Pid: #PID<0.174.0>
+Start Call: :erl_distribution.start_link(%{name: :"expert-manager-adventofcode2025-34714@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 1000
+Type: :supervisor
+13:59:07.308 [debug] sent notification server -> client $/progress
+13:59:07.308 [error] Process #PID<0.173.0> terminating
+** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+    (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+    (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Initial Call: XPExpert.Project.Node.init/1
+Ancestors: [:"adventofcode2025::supervisor", XPExpert.ProjectSupervisor, XPExpert.Supervisor, #PID<0.157.0>]
+Message Queue Length: 0
+Messages: []
+Links: [#PID<0.170.0>]
+Dictionary: []
+Trapping Exits: false
+Status: :running
+Heap Size: 1598
+Stack Size: 29
+Reductions: 4475
+13:59:07.314 [error] Child {XPExpert.Project.Node, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" failed to start
+** (exit) an exception was raised:
+    ** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+        (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+        (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Start Call: XPExpert.Project.Node.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 34714})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+13:59:07.315 [error] Task #PID<0.169.0> started from #PID<0.168.0> terminating
+** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+    (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function<3.104070401/0 in XPExpert.State.initialize/2>
+    Args: []
+13:59:07.317 [error] Child :undefined of Supervisor :expert_task_queue terminated
+** (exit) an exception was raised:
+    ** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+        (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+        (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Pid: #PID<0.169.0>
+Start Call: Task.Supervised.start_link/?
+Restart: :temporary
+Shutdown: 5000
+Type: :worker
+13:59:19.023 [info] Opened file:///D:/Repos/adventofcode2025/lib/adventofcode2025.ex
+13:59:19.023 [debug] handled notification client -> server textDocument/didOpen in 409µs
+13:59:23.290 [debug] sent notification server -> client window/logMessage
+13:59:23.295 [debug] handled request client -> server textDocument/hover in 15ms
+13:59:26.773 [info] Child of Supervisor :inet_gethost_native_sup started
+Pid: #PID<0.188.0>
+Start Call: :inet_gethost_native.init([])
+13:59:26.773 [debug] Child :inet_gethost_native_sup of Supervisor :kernel_safe_sup started
+Pid: #PID<0.187.0>
+Start Call: :inet_gethost_native.start_link()
+Restart: :temporary
+Shutdown: 1000
+Type: :worker
+13:59:27.004 [debug] sent notification server -> client window/logMessage
+13:59:27.004 [debug] handled request client -> server textDocument/completion in 19ms
+13:59:27.259 [debug] sent notification server -> client window/logMessage
+13:59:27.259 [debug] handled request client -> server textDocument/completion in 307µs
+13:59:27.262 [debug] handled notification client -> server $/cancelRequest in 2ms
+13:59:28.845 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:28.845 [debug] sent notification server -> client window/logMessage
+13:59:28.845 [warning] client -> server notification crashed
+13:59:28.845 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:28.845 [debug] sent notification server -> client window/logMessage
+13:59:28.845 [warning] client -> server notification crashed
+13:59:28.845 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:28.845 [debug] sent notification server -> client window/logMessage
+13:59:28.845 [warning] client -> server notification crashed
+13:59:28.845 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:28.845 [debug] sent notification server -> client window/logMessage
+13:59:28.845 [warning] client -> server notification crashed
+13:59:34.200 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:34.200 [debug] sent notification server -> client window/logMessage
+13:59:34.200 [warning] client -> server notification crashed
+13:59:34.200 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:34.200 [debug] sent notification server -> client window/logMessage
+13:59:34.200 [warning] client -> server notification crashed
+13:59:34.200 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:34.200 [debug] sent notification server -> client window/logMessage
+13:59:34.201 [warning] client -> server notification crashed
+13:59:34.201 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+13:59:34.201 [debug] sent notification server -> client window/logMessage
+13:59:34.201 [warning] client -> server notification crashed
+14:00:23.493 [debug] sent notification server -> client window/logMessage
+14:00:23.493 [debug] handled request client -> server textDocument/hover in 307µs
+14:00:26.736 [debug] sent notification server -> client window/logMessage
+14:00:26.736 [debug] handled request client -> server textDocument/definition in 4ms
+14:00:27.976 [debug] sent notification server -> client window/logMessage
+14:00:27.976 [debug] handled request client -> server textDocument/definition in 205µs
+14:00:31.587 [debug] handled notification client -> server $/cancelRequest in 102µs
+14:00:31.588 [debug] sent notification server -> client window/logMessage
+14:00:31.588 [debug] handled request client -> server textDocument/completion in 205µs
+14:00:31.870 [debug] handled notification client -> server $/cancelRequest in 204µs
+14:00:31.871 [debug] sent notification server -> client window/logMessage
+14:00:31.871 [debug] handled request client -> server textDocument/completion in 307µs
+14:00:33.385 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:33.385 [debug] sent notification server -> client window/logMessage
+14:00:33.385 [warning] client -> server notification crashed
+14:00:33.385 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:33.385 [debug] sent notification server -> client window/logMessage
+14:00:33.385 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:33.385 [debug] sent notification server -> client window/logMessage
+14:00:33.385 [warning] client -> server notification crashed
+14:00:33.385 [warning] client -> server notification crashed
+14:00:33.385 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:33.385 [debug] sent notification server -> client window/logMessage
+14:00:33.385 [warning] client -> server notification crashed
+14:00:34.554 [debug] handled notification client -> server $/cancelRequest in 102µs
+14:00:34.554 [debug] sent notification server -> client window/logMessage
+14:00:34.554 [debug] handled request client -> server textDocument/completion in 102µs
+14:00:35.681 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:35.681 [debug] sent notification server -> client window/logMessage
+14:00:35.681 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:35.681 [debug] sent notification server -> client window/logMessage
+14:00:35.681 [warning] client -> server notification crashed
+14:00:35.681 [warning] client -> server notification crashed
+14:00:48.995 [debug] handled notification client -> server $/cancelRequest in 307µs
+14:00:48.995 [debug] sent notification server -> client window/logMessage
+14:00:48.995 [debug] handled request client -> server textDocument/completion in 307µs
+14:00:49.267 [debug] handled notification client -> server $/cancelRequest in 204µs
+14:00:49.268 [debug] sent notification server -> client window/logMessage
+14:00:49.268 [debug] handled request client -> server textDocument/completion in 204µs
+14:00:50.148 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:50.148 [debug] sent notification server -> client window/logMessage
+14:00:50.148 [warning] client -> server notification crashed
+14:00:50.148 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:50.148 [debug] sent notification server -> client window/logMessage
+14:00:50.148 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:50.148 [debug] sent notification server -> client window/logMessage
+14:00:50.148 [warning] client -> server notification crashed
+14:00:50.148 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:50.148 [debug] sent notification server -> client window/logMessage
+14:00:50.148 [warning] client -> server notification crashed
+14:00:50.148 [warning] client -> server notification crashed
+14:00:50.148 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:50.148 [debug] sent notification server -> client window/logMessage
+14:00:50.148 [warning] client -> server notification crashed
+14:00:54.308 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:54.308 [debug] sent notification server -> client window/logMessage
+14:00:54.308 [warning] client -> server notification crashed
+14:00:54.649 [debug] handled notification client -> server $/cancelRequest in 102µs
+14:00:54.649 [debug] sent notification server -> client window/logMessage
+14:00:54.649 [debug] handled request client -> server textDocument/completion in 205µs
+14:00:56.706 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:00:56.706 [debug] sent notification server -> client window/logMessage
+14:00:56.706 [warning] client -> server notification crashed
+14:01:16.407 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:01:16.407 [debug] sent notification server -> client window/logMessage
+14:01:16.407 [warning] client -> server notification crashed
+14:02:21.739 [debug] sent notification server -> client window/logMessage
+14:02:21.739 [debug] handled request client -> server textDocument/formatting in 79ms
+14:02:22.188 [debug] handled notification client -> server $/cancelRequest in 103µs
+14:02:22.327 [debug] sent notification server -> client window/logMessage
+14:02:22.327 [info] Shutting down
+14:02:22.327 [debug] handled request client -> server shutdown in 114ms
+14:03:43.041 [debug] Child {XPLoggerFileBackend, :general_log} of Supervisor Logger.Backends.Supervisor started
+Pid: #PID<0.102.0>
+Start Call: Logger.Backends.Watcher.start_link({{XPLoggerFileBackend, :general_log}, {XPLoggerFileBackend, :general_log}})
+Restart: :transient
+Shutdown: 5000
+Type: :worker
+14:03:43.041 [info] Child Logger.Backends.Supervisor of Supervisor Logger.Backends.Internal started
+Pid: #PID<0.101.0>
+Start Call: Logger.Backends.Supervisor.start_link([{XPLoggerFileBackend, :general_log}])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:43.041 [info] Child Logger.Backends.Internal of Supervisor Logger.Supervisor started
+Pid: #PID<0.97.0>
+Start Call: Logger.Backends.Internal.start_link([])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:43.041 [info] Application logger started at :nonode@nohost
+14:03:43.041 [info] Application xp_mime started at :nonode@nohost
+14:03:43.041 [info] Application xp_hpax started at :nonode@nohost
+14:03:43.041 [info] Application crypto started at :nonode@nohost
+14:03:43.041 [info] Application asn1 started at :nonode@nohost
+14:03:43.041 [info] Application public_key started at :nonode@nohost
+14:03:43.106 [debug] Child :ssl_handler of Supervisor :logger_sup started
+Pid: #PID<0.107.0>
+Start Call: :logger_olp.start_link(:logger_std_h_ssl_handler, :logger_h_common, %{id: :ssl_handler, module: :logger_std_h, config: %{type: :standard_io, filesync_repeat_interval: :no_repeat}, level: :debug, filter_default: :stop, filters: [], formatter: {:ssl_logger, %{}}}, %{})
+Restart: :temporary
+Shutdown: 2000
+Type: :worker
+14:03:43.264 [info] Child :ssl_pem_cache of Supervisor :ssl_admin_sup started
+Pid: #PID<0.111.0>
+Start Call: :ssl_pem_cache.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+14:03:43.365 [info] Child :ssl_manager of Supervisor :ssl_admin_sup started
+Pid: #PID<0.112.0>
+Start Call: :ssl_manager.start_link([])
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+14:03:43.407 [info] Child :tls_client_ticket_store of Supervisor :ssl_admin_sup started
+Pid: #PID<0.113.0>
+Start Call: :tls_client_ticket_store.start_link(1000, 7200)
+Restart: :permanent
+Shutdown: 4000
+Type: :worker
+14:03:43.407 [info] Child :ssl_admin_sup of Supervisor :ssl_sup started
+Pid: #PID<0.110.0>
+Start Call: :ssl_admin_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.501 [info] Child :tls_connection_sup of Supervisor :tls_sup started
+Pid: #PID<0.116.0>
+Start Call: :tls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.569 [info] Child :ssl_listen_tracker_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.118.0>
+Start Call: :ssl_listen_tracker_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.601 [info] Child :tls_server_session_ticket of Supervisor :tls_server_sup started
+Pid: #PID<0.119.0>
+Start Call: :tls_server_session_ticket_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.630 [info] Child :ssl_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.120.0>
+Start Call: :ssl_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.659 [info] Child :ssl_upgrade_server_session_cache_sup of Supervisor :tls_server_sup started
+Pid: #PID<0.121.0>
+Start Call: :ssl_upgrade_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.659 [info] Child :tls_server_sup of Supervisor :tls_sup started
+Pid: #PID<0.117.0>
+Start Call: :tls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.659 [info] Child :tls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.115.0>
+Start Call: :tls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.717 [info] Child :dtls_connection_sup of Supervisor :dtls_sup started
+Pid: #PID<0.123.0>
+Start Call: :dtls_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.764 [info] Child :dtls_listener_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.125.0>
+Start Call: :dtls_listener_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.857 [info] Child :dtls_server_session_cache_sup of Supervisor :dtls_server_sup started
+Pid: #PID<0.126.0>
+Start Call: :dtls_server_session_cache_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.857 [info] Child :dtls_server_sup of Supervisor :dtls_sup started
+Pid: #PID<0.124.0>
+Start Call: :dtls_server_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.858 [info] Child :dtls_sup of Supervisor :ssl_connection_sup started
+Pid: #PID<0.122.0>
+Start Call: :dtls_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.858 [info] Child :ssl_connection_sup of Supervisor :ssl_sup started
+Pid: #PID<0.114.0>
+Start Call: :ssl_connection_sup.start_link()
+Restart: :permanent
+Shutdown: 4000
+Type: :supervisor
+14:03:43.858 [info] Application ssl started at :nonode@nohost
+14:03:43.887 [info] Application xp_mint started at :nonode@nohost
+14:03:43.887 [info] Application xp_nimble_options started at :nonode@nohost
+14:03:44.015 [info] Child XPNimblePool.TaskSupervisor of Supervisor #PID<0.132.0> (Supervisor.Default) started
+Pid: #PID<0.133.0>
+Start Call: Task.Supervisor.start_link([name: XPNimblePool.TaskSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:44.016 [info] Application xp_nimble_pool started at :nonode@nohost
+14:03:44.124 [info] Child :telemetry_handler_table of Supervisor :telemetry_sup started
+Pid: #PID<0.137.0>
+Start Call: :telemetry_handler_table.start_link()
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:44.124 [info] Application xp_telemetry started at :nonode@nohost
+14:03:44.124 [info] Application xp_finch started at :nonode@nohost
+14:03:44.795 [info] Child XPReq.Finch.PIDPartition0 of Supervisor XPReq.Finch started
+Pid: #PID<0.143.0>
+Start Call: Registry.Partition.start_link(XPReq.Finch.PIDPartition0, {:duplicate, XPReq.Finch, 0, 1, XPReq.Finch.KeyPartition0, XPReq.Finch.PIDPartition0, [], false})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:44.795 [info] Child XPReq.Finch of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.142.0>
+Start Call: Registry.start_link([keys: :duplicate, name: XPReq.Finch, meta: [config: %{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}}]])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:44.796 [info] Child XPReq.Finch.PoolSupervisor of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.144.0>
+Start Call: DynamicSupervisor.start_link([name: XPReq.Finch.PoolSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:44.796 [info] Child XPFinch.PoolManager of Supervisor XPReq.Finch.Supervisor started
+Pid: #PID<0.145.0>
+Start Call: XPFinch.PoolManager.start_link(%{pools: %{}, registry_name: XPReq.Finch, supervisor_name: XPReq.Finch.PoolSupervisor, manager_name: XPReq.Finch.PoolManager, default_pool_config: %{count: 1, size: 50, mod: XPFinch.HTTP1.Pool, conn_opts: [protocols: [:http1], transport_opts: [keepalive: true, nodelay: true, timeout: 5000], ssl_key_log_file_device: nil], pool_max_idle_time: :infinity, conn_max_idle_time: :infinity, start_pool_metrics?: false}})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:44.796 [info] Child XPReq.Finch of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.141.0>
+Start Call: XPFinch.start_link([name: XPReq.Finch, pools: %{default: [protocols: [:http1]]}])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:44.796 [info] Child XPReq.FinchSupervisor of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.146.0>
+Start Call: DynamicSupervisor.start_link([strategy: :one_for_one, name: XPReq.FinchSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:44.796 [info] Child XPReq.Test.Ownership of Supervisor #PID<0.140.0> (Supervisor.Default) started
+Pid: #PID<0.147.0>
+Start Call: XPReq.Test.Ownership.start_link([name: XPReq.Test.Ownership])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:44.796 [info] Application xp_req started at :nonode@nohost
+14:03:44.796 [info] Application burrito started at :nonode@nohost
+14:03:44.796 [info] Application xp_schematic started at :nonode@nohost
+14:03:44.796 [info] Application xp_typed_struct started at :nonode@nohost
+14:03:44.796 [info] Application xp_gen_lsp started at :nonode@nohost
+14:03:45.224 [info] Child XPSnowflake.Generator of Supervisor #PID<0.150.0> (Supervisor.Default) started
+Pid: #PID<0.151.0>
+Start Call: XPSnowflake.Generator.start_link(0, 1023)
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:45.224 [info] Application xp_snowflake started at :nonode@nohost
+14:03:45.224 [info] Application xp_sourceror started at :nonode@nohost
+14:03:45.224 [info] Application xp_forge started at :nonode@nohost
+14:03:45.224 [info] Application xp_logger_file_backend started at :nonode@nohost
+14:03:45.369 [info] Child :ttb_autostart of Supervisor :runtime_tools_sup started
+Pid: #PID<0.155.0>
+Start Call: :ttb_autostart.start_link()
+Restart: :temporary
+Shutdown: 3000
+Type: :worker
+14:03:45.369 [info] Application runtime_tools started at :nonode@nohost
+14:03:45.369 [info] Application et started at :nonode@nohost
+14:03:45.369 [info] Application observer started at :nonode@nohost
+14:03:45.369 [info] Application xp_path_glob started at :nonode@nohost
+14:03:45.802 [info] Starting NodePortMapper on nonode@nohost
+14:03:45.802 [info] Child XPForge.NodePortMapper of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.159.0>
+Start Call: XPForge.NodePortMapper.start_link([])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:45.839 [info] Child XPForge.Document.Store of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.160.0>
+Start Call: XPForge.Document.Store.start_link([derive: [analysis: &XPForge.Ast.analyze/1]])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:45.865 [info] Child XPExpert.ProjectSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.161.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.ProjectSupervisor, strategy: :one_for_one])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:45.865 [info] Child XPExpert.DynamicSupervisor of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.162.0>
+Start Call: DynamicSupervisor.start_link([name: XPExpert.DynamicSupervisor])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:45.918 [info] Child XPGenLSP.Assigns of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.163.0>
+Start Call: XPGenLSP.Assigns.start_link([name: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:45.918 [info] Child :expert_task_queue of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.164.0>
+Start Call: Task.Supervisor.start_link([name: :expert_task_queue])
+Restart: :permanent
+Shutdown: :infinity
+Type: :supervisor
+14:03:45.957 [info] Child XPGenLSP.Buffer of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.165.0>
+Start Call: XPGenLSP.Buffer.start_link([name: XPExpert.Buffer])
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:45.957 [debug] [name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns]
+14:03:46.099 [info] Child XPExpert of Supervisor XPExpert.Supervisor started
+Pid: #PID<0.166.0>
+Start Call: XPExpert.start_link([name: XPExpert, buffer: XPExpert.Buffer, task_supervisor: :expert_task_queue, dynamic_supervisor: XPExpert.DynamicSupervisor, assigns: XPExpert.Assigns])
+Restart: :permanent
+Shutdown: 500
+Type: :worker
+14:03:46.099 [info] Application xp_expert started at :nonode@nohost
+14:03:49.108 [info] Starting project at uri file:///d%3A/Repos/adventofcode2025
+14:03:49.475 [info] Child {XPExpert.Project.Progress, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.171.0>
+Start Call: XPExpert.Project.Progress.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 28379})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:49.505 [info] Child {XPExpert.EngineSupervisor, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" started
+Pid: #PID<0.172.0>
+Start Call: XPExpert.EngineSupervisor.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 28379})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:49.583 [debug] sent request server -> client window/workDoneProgress/create
+14:03:49.660 [info] Child XPForge.EPMD of Supervisor :net_sup started
+Pid: #PID<0.175.0>
+Start Call: XPForge.EPMD.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+14:03:49.702 [info] Child :auth of Supervisor :net_sup started
+Pid: #PID<0.176.0>
+Start Call: :auth.start_link()
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+14:03:49.722 [debug] sent notification server -> client $/progress
+14:03:51.271 [debug] handled request client -> server initialize in 4932ms
+14:03:51.352 [debug] sent request server -> client client/registerCapability
+14:03:51.563 [info] Opened file:///D:/Repos/adventofcode2025/lib/adventofcode2025.ex
+14:03:51.564 [debug] handled notification client -> server textDocument/didOpen in 291ms
+14:03:51.709 [debug] handled notification client -> server initialized in 436ms
+14:03:51.874 [info] Child :net_kernel of Supervisor :net_sup started
+Pid: #PID<0.177.0>
+Start Call: :net_kernel.start_link(%{name: :"expert-manager-adventofcode2025-28379@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 2000
+Type: :worker
+14:03:51.875 [debug] Child :net_sup_dynamic of Supervisor :kernel_sup started
+Pid: #PID<0.174.0>
+Start Call: :erl_distribution.start_link(%{name: :"expert-manager-adventofcode2025-28379@127.0.0.1", supervisor: :net_sup_dynamic, net_tickintensity: 4, net_ticktime: 60, name_domain: :longnames, clean_halt: false})
+Restart: :permanent
+Shutdown: 1000
+Type: :supervisor
+14:03:51.969 [debug] sent notification server -> client $/progress
+14:03:51.969 [error] Process #PID<0.173.0> terminating
+** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+    (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+    (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+    (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Initial Call: XPExpert.Project.Node.init/1
+Ancestors: [:"adventofcode2025::supervisor", XPExpert.ProjectSupervisor, XPExpert.Supervisor, #PID<0.157.0>]
+Message Queue Length: 0
+Messages: []
+Links: [#PID<0.170.0>]
+Dictionary: []
+Trapping Exits: false
+Status: :running
+Heap Size: 1598
+Stack Size: 29
+Reductions: 4475
+14:03:52.059 [error] Child {XPExpert.Project.Node, "adventofcode2025"} of Supervisor :"adventofcode2025::supervisor" failed to start
+** (exit) an exception was raised:
+    ** (FunctionClauseError) no function clause matching in IO.chardata_to_string/1
+        (elixir 1.17.3) lib/io.ex:696: IO.chardata_to_string(nil)
+        (elixir 1.17.3) lib/path.ex:507: Path.basename/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:68: XPExpert.Port.path_env_at_directory/2
+        (xp_expert 0.1.0-0ff78f1) lib/expert/port.ex:40: XPExpert.Port.elixir_executable/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:192: XPExpert.EngineNode.glob_paths/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/engine_node.ex:145: XPExpert.EngineNode.start/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/node.ex:96: XPExpert.Project.Node.start_node/1
+        (xp_expert 0.1.0-0ff78f1) lib/expert/project/progress/support.ex:18: XPExpert.Project.Progress.Support.with_progress/3
+Start Call: XPExpert.Project.Node.start_link(%XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 28379})
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+14:03:52.061 [error] Task #PID<0.169.0> started from #PID<0.168.0> terminating
+** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+    (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function<3.104070401/0 in XPExpert.State.initialize/2>
+    Args: []
+14:03:52.092 [error] Child :undefined of Supervisor :expert_task_queue terminated
+** (exit) an exception was raised:
+    ** (MatchError) no match of right hand side value: {:error, {:shutdown, {:failed_to_start_child, {XPExpert.Project.Node, "adventofcode2025"}, {:function_clause, [{IO, :chardata_to_string, [nil], [file: ~c"lib/io.ex", line: 696]}, {Path, :basename, 1, [file: ~c"lib/path.ex", line: 507]}, {XPExpert.Port, :path_env_at_directory, 2, [file: ~c"lib/expert/port.ex", line: 68]}, {XPExpert.Port, :elixir_executable, 1, [file: ~c"lib/expert/port.ex", line: 40]}, {XPExpert.EngineNode, :glob_paths, 1, [file: ~c"lib/expert/engine_node.ex", line: 192]}, {XPExpert.EngineNode, :start, 1, [file: ~c"lib/expert/engine_node.ex", line: 145]}, {XPExpert.Project.Node, :start_node, 1, [file: ~c"lib/expert/project/node.ex", line: 96]}, {XPExpert.Project.Progress.Support, :with_progress, 3, [file: ~c"lib/expert/project/progress/support.ex", line: 18]}]}}}}
+        (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:59: anonymous fn/1 in XPExpert.State.initialize/2
+        (elixir 1.17.3) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Pid: #PID<0.169.0>
+Start Call: Task.Supervised.start_link/?
+Restart: :temporary
+Shutdown: 5000
+Type: :worker
+14:04:04.226 [debug] sent notification server -> client window/logMessage
+14:04:04.292 [debug] handled request client -> server textDocument/hover in 221ms
+14:04:05.975 [debug] sent notification server -> client window/logMessage
+14:04:05.975 [debug] handled request client -> server textDocument/completion in 126ms
+14:04:06.023 [error] Failed to handle textDocument/didChange, {{:error, :invalid_version}, %XPExpert.State{configuration: %XPExpert.Configuration{project: %XPForge.Project{root_uri: "file:///d%3A/Repos/adventofcode2025", mix_exs_uri: "file:///d%3A/Repos/adventofcode2025/mix.exs", mix_project?: true, mix_env: nil, mix_target: nil, env_variables: %{}, project_module: nil, entropy: 28379}, support: %XPExpert.Configuration.Support{code_action_dynamic_registration: true, hierarchical_symbols: true, snippet: true, deprecated: true, tags: %{value_set: [1]}, signature_help: %XPGenLSP.Structures.SignatureHelpClientCapabilities{context_support: nil, signature_information: %{documentation_format: ["markdown", "plaintext"], parameter_information: %{label_offset_support: true}, active_parameter_support: true}, dynamic_registration: false}, work_done_progress: true}, client_name: "Neovim", additional_watched_extensions: nil, dialyzer_enabled?: false}, initialized?: true, engine_initialized?: false, shutdown_received?: false, in_flight_requests: %{}}}
+14:04:06.023 [debug] handled notification client -> server textDocument/didChange in 318ms
+14:04:06.124 [debug] sent notification server -> client window/logMessage
+14:04:06.124 [debug] handled request client -> server textDocument/completion in 307µs
+14:04:06.158 [info] Child of Supervisor :inet_gethost_native_sup started
+Pid: #PID<0.193.0>
+Start Call: :inet_gethost_native.init([])
+14:04:06.158 [debug] Child :inet_gethost_native_sup of Supervisor :kernel_safe_sup started
+Pid: #PID<0.192.0>
+Start Call: :inet_gethost_native.start_link()
+Restart: :temporary
+Shutdown: 1000
+Type: :worker
+14:04:06.177 [debug] handled notification client -> server $/cancelRequest in 53ms
+14:04:08.221 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:04:08.221 [debug] sent notification server -> client window/logMessage
+14:04:08.221 [warning] client -> server notification crashed
+14:04:08.221 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:04:08.221 [error] ** (ErlangError) Erlang error: {:erpc, :noconnection}
+    (kernel 10.2.7.1) erpc.erl:1376: :erpc.call/5
+    (xp_expert 0.1.0-0ff78f1) lib/expert/state.ex:122: XPExpert.State.apply/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:205: XPExpert.apply_to_state/2
+    (xp_expert 0.1.0-0ff78f1) lib/expert.ex:144: XPExpert.handle_notification/2
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:519: anonymous fn/2 in XPGenLSP.loop/3
+    (xp_telemetry 1.3.0) /home/runner/work/expert/expert/apps/expert/deps/telemetry/src/telemetry.erl:324: :xp_telemetry.span/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:515: anonymous fn/4 in XPGenLSP.loop/3
+    (xp_gen_lsp 0.11.1) lib/gen_lsp.ex:592: anonymous fn/4 in XPGenLSP.attempt/4
+
+14:04:08.221 [debug] sent notification server -> client window/logMessage
+14:04:08.221 [debug] sent notification server -> client window/logMessage
+14:04:08.221 [warning] client -> server notification crashed
+14:04:08.221 [warning] client -> server notification crashed
+14:06:07.971 [debug] sent notification server -> client window/logMessage
+14:06:07.971 [info] Shutting down
+14:06:07.971 [debug] handled request client -> server shutdown in 14ms

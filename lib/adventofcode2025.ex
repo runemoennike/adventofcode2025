@@ -14,7 +14,5 @@ defmodule Adventofcode2025 do
   """
   def hello do
     :world
-
-    IO.puts("asd")
   end
 end
