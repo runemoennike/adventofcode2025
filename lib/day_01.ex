@@ -23,12 +23,13 @@ defmodule Day01 do
     |> elem(1)
   end
 
+  defp cycle_count(n), do: abs(Integer.floor_div(n, 100))
+
   defp zero_score_part2(pos, step) do
     cond do
-      step > 0 -> Integer.floor_div(pos + step, 100)
-      step < 0 and pos == 0 -> Integer.floor_div(abs(step), 100)
-      step < 0 and crank(pos, step) == 0 -> 1 + Integer.floor_div(abs(step), 100)
-      step < 0 -> abs(Integer.floor_div(pos + step, 100))
+      step < 0 and pos == 0 -> cycle_count(abs(step))
+      step < 0 and crank(pos, step) == 0 -> 1 + cycle_count(abs(step))
+      true -> cycle_count(pos + step)
     end
   end
 
