@@ -37,6 +37,20 @@ defmodule Day01Test do
 
     result = input |> parse() |> part1()
 
-    IO.puts(result)
+    IO.puts("Part 1: #{result}")
+  end
+
+  test "part2 example", %{input: input} do
+    result = input |> parse() |> part2()
+
+    assert result == 6
+  end
+
+  test "part2" do
+    input = File.read!("./puzzle_input/day_01.txt")
+
+    result = input |> parse() |> part2()
+
+    IO.puts("Part 2: #{result}")
   end
 end

@@ -9,14 +9,37 @@ defmodule Day01 do
     end)
   end
 
-  defp zero_score(0, zeroes), do: zeroes + 1
-  defp zero_score(_, zeroes), do: zeroes
+  defp crank(pos, step), do: Integer.mod(pos + step, 100)
+
+  defp zero_score_part1(0), do: 1
+  defp zero_score_part1(_), do: 0
 
   def part1(steps) do
     steps
-    |> List.foldl({50, 0}, fn step, {position, zeroes} ->
-      new_position = Integer.mod(position + step, 100)
-      {new_position, zero_score(new_position, zeroes)}
+    |> List.foldl({50, 0}, fn step, {pos, zeroes} ->
+      new_pos = crank(pos, step)
+      {new_pos, zeroes + zero_score_part1(new_pos)}
+    end)
+    |> elem(1)
+  end
+
+  defp zero_score_part2(pos, step) do
+    cond do
+      step > 0 -> Integer.floor_div(pos + step, 100)
+      step < 0 and pos == 0 -> Integer.floor_div(abs(step), 100)
+      step < 0 and crank(pos, step) == 0 -> 1 + Integer.floor_div(abs(step), 100)
+      step < 0 -> abs(Integer.floor_div(pos + step, 100))
+    end
+  end
+
+  def part2(steps) do
+    steps
+    |> List.foldl({50, 0}, fn step, {pos, zeroes} ->
+      # IO.puts("#{position} + #{step} = #{Integer.mod(position + step, 100)} \t +#{zero_score_part2(position, step)}")
+      {
+        crank(pos, step),
+        zeroes + zero_score_part2(pos, step)
+      }
     end)
     |> elem(1)
   end
