@@ -42,17 +42,17 @@ defmodule Day05Test do
     IO.puts("Part 1: #{result}")
   end
 
-  # test "part2 example", %{input: input} do
-  #   result = input |> parse() |> part2()
-  #
-  #   assert result == 43
-  # end
-  #
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_05.txt")
-  #
-  #   result = input |> parse() |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+  test "part2 example", %{input: input} do
+    result = input |> parse() |> then(fn {fresh, _} -> part2(fresh) end)
+
+    assert result == 14
+  end
+
+  test "part2" do
+    input = File.read!("./puzzle_input/day_05.txt")
+
+    result = input |> parse() |> then(fn {fresh, _} -> part2(fresh) end)
+
+    IO.puts("Part 2: #{result}")
+  end
 end
