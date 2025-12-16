@@ -31,26 +31,19 @@ defmodule Day06 do
     |> then(fn l -> [Enum.at(l, -1) | Enum.take(l, length(l) - 1)] end)
     |> Enum.map(&String.graphemes/1)
     |> Enum.zip()
-    |> Enum.map(fn t ->
-      Tuple.to_list(t) |> Enum.join() |> String.replace(" ", "")
+    |> Enum.flat_map(fn t ->
+      Tuple.to_list(t)
+      |> Enum.join()
+      |> String.replace(" ", "")
+      |> then(fn
+        "*" <> s -> [:multiply, String.to_integer(s)]
+        "+" <> s -> [:add, String.to_integer(s)]
+        "" -> [:split]
+        s -> [String.to_integer(s)]
+      end)
     end)
-    |> Enum.flat_map(fn
-      "*" <> s -> [:multiply, String.to_integer(s)]
-      "+" <> s -> [:add, String.to_integer(s)]
-      "" -> [:split]
-      s -> [String.to_integer(s)]
-    end)
-    |> Enum.chunk_while(
-      [],
-      fn
-        :split, acc -> {:cont, acc, []}
-        el, acc -> {:cont, acc ++ [el]}
-      end,
-      fn
-        [] -> {:cont, []}
-        acc -> {:cont, acc, []}
-      end
-    )
+    |> Enum.chunk_by(&(&1 == :split))
+    |> Enum.reject(&(&1 == [:split]))
   end
 
   def part2(computations) do
