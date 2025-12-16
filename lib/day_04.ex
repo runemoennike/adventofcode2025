@@ -1,12 +1,8 @@
 defmodule Day04 do
-  @type tile :: :none | :roll
-  @type tile_map :: [[tile]]
-
   @neighbours -1..1
               |> Enum.flat_map(fn j -> for i <- -1..1, do: {i, j} end)
               |> Enum.reject(&(&1 == {0, 0}))
 
-  @spec parse(String.t()) :: tile_map
   def parse(input) do
     input
     |> String.trim()
@@ -25,7 +21,6 @@ defmodule Day04 do
     |> Map.new()
   end
 
-  @spec part1(tile_map) :: pos_integer()
   def part1(map) do
     map
     |> reachable_rolls()
@@ -47,7 +42,6 @@ defmodule Day04 do
 
   def free?(map, x, y), do: map[{x, y}] in [nil, :none]
 
-  @spec part2(tile_map) :: pos_integer()
   def part2(tile_map) do
     Stream.unfold(tile_map, &remove_rolls/1)
     |> Enum.sum()
