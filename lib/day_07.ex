@@ -33,29 +33,39 @@ defmodule Day07 do
     end)
   end
 
-  def part1({start, map}) do
-    w = map |> Map.keys() |> Enum.map(fn {x, _} -> x end) |> Enum.max()
-    h = map |> Map.keys() |> Enum.map(fn {_, y} -> y end) |> Enum.max()
+  def part1({{start_x, 0}, map, {w, h}}) do
+    splitters = map |> Map.keys() |> Enum.group_by(&elem(&1, 1), &elem(&1, 0))
+    mask = Tuple.duplicate(:empty, w) |> then(fn t -> put_elem(t, start_x, :beam) end)
 
-    beams(map, {w, h}, start)
-    |> Stream.reject(&(&1 == nil))
-    |> Stream.uniq()
-    |> Enum.sort_by(fn {_x, y} -> y end)
-    |> IO.inspect()
-    |> Enum.count()
-  end
+    0..h
+    |> Enum.reduce({mask, 0}, fn y, {mask, beam_count} ->
+      splitter_xs = splitters[y]
 
-  def beams(_map, {map_w, map_h}, {x, y})
-      when x < 0 or x >= map_w or y >= map_h, do: []
+      if splitter_xs == nil do
+        {mask, beam_count}
+      else
+        IO.inspect(splitter_xs)
 
-  def beams(map, map_size, {x, y}) do
-    case map[{x, y}] do
-      :split ->
-        [{x - 1, y}, {x + 1, y}] ++
-          beams(map, map_size, {x - 1, y}) ++ beams(map, map_size, {x + 1, y})
+        splitter_xs
+        |> Enum.reduce({mask, beam_count}, fn splitter_x, {mask, beam_count} ->
+          if elem(mask, splitter_x) == :beam do
+            new_xs =
+              [splitter_x - 1, splitter_x + 1]
+              |> Enum.filter(&(&1 >= 0 and &1 < w and elem(mask, &1) == :empty))
 
-      nil ->
-        beams(map, map_size, {x, y + 1})
-    end
+            updated_mask =
+              new_xs
+              |> Enum.reduce(mask, fn x, mask -> put_elem(mask, x, :beam) end)
+              |> then(fn mask -> put_elem(mask, splitter_x, :empty) end)
+
+            {updated_mask, beam_count + length(new_xs)}
+          else
+            {mask, beam_count}
+          end
+        end)
+      end
+      |> IO.inspect()
+    end)
+    |> then(&elem(&1, 1))
   end
 end
