@@ -65,13 +65,14 @@ defmodule Day07Test do
     assert 21 == result
   end
 
-  # test "part1" do
-  #   input = File.read!("./puzzle_input/day_06.txt")
-  #
-  #   result = input |> p1_parse() |> part1()
-  #
-  #   IO.puts("Part 1: #{result}")
-  # end
+  test "part1" do
+    input = File.read!("./puzzle_input/day_07.txt")
+
+    result = input |> parse() |> part1()
+
+    IO.puts("Part 1: #{result}")
+  end
+
   #
   # test "part2 parse", %{input: input} do
   #   result = p2_parse(input)

@@ -1,4 +1,6 @@
 defmodule Day07 do
+  use Memoize
+
   def parse(input) do
     h = 1 + (input |> String.trim() |> String.count("\n"))
     w = input |> String.split("\n") |> hd |> String.trim() |> String.length()
@@ -33,7 +35,31 @@ defmodule Day07 do
     end)
   end
 
-  def part1({{start_x, 0}, map, {w, h}}) do
+  def part1({start, map, map_size}) do
+    beam(start, map, map_size)
+    |> Enum.uniq()
+    |> Enum.count()
+  end
+
+  defmemo(
+    beam({x, y}, _map, {w, h})
+    when x < 0 or y < 0 or x >= w or y >= h,
+    do: MapSet.new()
+  )
+
+  defmemo beam({x, y}, map, map_size) do
+    case map[{x, y}] do
+      :split ->
+        MapSet.new([{x, y}])
+        |> MapSet.union(beam({x - 1, y}, map, map_size))
+        |> MapSet.union(beam({x + 1, y}, map, map_size))
+
+      nil ->
+        beam({x, y + 1}, map, map_size)
+    end
+  end
+
+  def maybe_part2({{start_x, 0}, map, {w, h}}) do
     splitters = map |> Map.keys() |> Enum.group_by(&elem(&1, 1), &elem(&1, 0))
     mask = Tuple.duplicate(:empty, w) |> then(fn t -> put_elem(t, start_x, :beam) end)
 
