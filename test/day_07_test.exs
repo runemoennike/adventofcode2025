@@ -73,29 +73,17 @@ defmodule Day07Test do
     IO.puts("Part 1: #{result}")
   end
 
-  #
-  # test "part2 parse", %{input: input} do
-  #   result = p2_parse(input)
-  #
-  #   assert [
-  #            [:multiply, 1, 24, 356],
-  #            [:add, 369, 248, 8],
-  #            [:multiply, 32, 581, 175],
-  #            [:add, 623, 431, 4]
-  #          ] == result
-  # end
-  #
-  # test "part2 example", %{input: input} do
-  #   result = input |> p2_parse() |> part2()
-  #
-  #   assert 3_263_827 == result
-  # end
-  #
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_06.txt")
-  #
-  #   result = input |> p2_parse() |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+  test "part2 example", %{input: input} do
+    result = input |> parse() |> part2()
+
+    assert 40 == result
+  end
+
+  test "part2" do
+    input = File.read!("./puzzle_input/day_07.txt")
+
+    result = input |> parse() |> part2()
+
+    IO.puts("Part 2: #{result}")
+  end
 end

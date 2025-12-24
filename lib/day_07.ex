@@ -59,39 +59,42 @@ defmodule Day07 do
     end
   end
 
-  def maybe_part2({{start_x, 0}, map, {w, h}}) do
+  def part2({{start_x, 0}, map, {w, h}}) do
     splitters = map |> Map.keys() |> Enum.group_by(&elem(&1, 1), &elem(&1, 0))
-    mask = Tuple.duplicate(:empty, w) |> then(fn t -> put_elem(t, start_x, :beam) end)
+    window = Tuple.duplicate(:empty, w) |> then(fn t -> put_elem(t, start_x, 1) end)
 
     0..h
-    |> Enum.reduce({mask, 0}, fn y, {mask, beam_count} ->
-      splitter_xs = splitters[y]
-
-      if splitter_xs == nil do
-        {mask, beam_count}
-      else
-        IO.inspect(splitter_xs)
-
-        splitter_xs
-        |> Enum.reduce({mask, beam_count}, fn splitter_x, {mask, beam_count} ->
-          if elem(mask, splitter_x) == :beam do
-            new_xs =
-              [splitter_x - 1, splitter_x + 1]
-              |> Enum.filter(&(&1 >= 0 and &1 < w and elem(mask, &1) == :empty))
-
-            updated_mask =
-              new_xs
-              |> Enum.reduce(mask, fn x, mask -> put_elem(mask, x, :beam) end)
-              |> then(fn mask -> put_elem(mask, splitter_x, :empty) end)
-
-            {updated_mask, beam_count + length(new_xs)}
-          else
-            {mask, beam_count}
-          end
-        end)
+    |> Enum.reduce(window, fn y, window ->
+      case splitters[y] do
+        nil -> window
+        xs -> xs |> split(window)
       end
-      |> IO.inspect()
     end)
-    |> then(&elem(&1, 1))
+    |> Tuple.to_list()
+    |> Enum.reject(&(&1 == :empty))
+    |> Enum.sum()
+  end
+
+  def split(xs, window) do
+    xs
+    |> Enum.reduce(window, fn x, window ->
+      case elem(window, x) do
+        :empty ->
+          window
+
+        n ->
+          window
+          |> merge_cell(x - 1, n)
+          |> merge_cell(x + 1, n)
+          |> then(fn mask -> put_elem(mask, x, :empty) end)
+      end
+    end)
+  end
+
+  def merge_cell(mask, x, val) do
+    case elem(mask, x) do
+      :empty -> put_elem(mask, x, val)
+      n -> put_elem(mask, x, n + val)
+    end
   end
 end
