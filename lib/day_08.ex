@@ -41,12 +41,19 @@ defmodule Day08 do
     )
   end
 
-  def connect_re(distances, limit), do: connect_re(distances, limit, [])
+  def part2(jboxes) do
+    jboxes
+    |> build_distances()
+    |> find_last_connection(length(jboxes))
+    |> then(fn {{x_a, _, _}, {x_b, _, _}} -> x_a * x_b end)
+  end
 
-  def connect_re(_distances, limit, groups) when limit <= 0, do: groups
+  def find_last_connection(distances, num_jboxes),
+    do: find_last_connection(distances, num_jboxes, [], MapSet.new())
 
-  def connect_re(distances, limit, groups) do
+  def find_last_connection(distances, num_jboxes, groups, visited) do
     {{_distance, jbox_a, jbox_b}, next_distances} = distances |> List.pop_at(0)
+    next_visited = visited |> MapSet.put(jbox_a) |> MapSet.put(jbox_b)
 
     next_groups =
       case {find_group(groups, jbox_a), find_group(groups, jbox_b)} do
@@ -61,7 +68,11 @@ defmodule Day08 do
         {idx_a, idx_b} -> merge_groups(groups, idx_a, idx_b)
       end
 
-    connect_re(next_distances, limit - 1, next_groups)
+    if MapSet.size(next_visited) == num_jboxes and length(next_groups) == 1 do
+      {jbox_a, jbox_b}
+    else
+      find_last_connection(next_distances, num_jboxes, next_groups, next_visited)
+    end
   end
 
   def merge_groups(groups, idx_a, idx_b) do
