@@ -58,13 +58,12 @@ defmodule Day09Test do
     IO.puts("Part 1: #{result}")
   end
 
-  #
-  # test "part2 example", %{input: input} do
-  #   result = input |> parse() |> part2()
-  #
-  #   assert 25272 == result
-  # end
-  #
+  test "part2 example", %{input: input} do
+    result = input |> parse() |> part2()
+
+    assert 24 == result
+  end
+
   # test "part2" do
   #   input = File.read!("./puzzle_input/day_09.txt")
   #
