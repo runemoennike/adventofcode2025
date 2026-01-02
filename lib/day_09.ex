@@ -25,52 +25,53 @@ defmodule Day09 do
     positions
     |> build_areas()
     |> Enum.sort_by(&elem(&1, 0), :desc)
-    |> Enum.find(fn {_area, a, b} -> rect_inside_polygon?(a, b, edges) end)
+    |> Enum.find(fn {_area, a, b} -> not rect_crosses(a, b, edges) end)
     |> then(&elem(&1, 0))
   end
 
-  def rect_inside_polygon?({ax, ay}, {bx, by}, polygon_edges) do
-    [{ax, ay}, {ax, by}, {bx, by}, {bx, ay}]
-    |> Enum.all?(&(point_inside_polygon?(&1, polygon_edges) or point_on_edges(&1, polygon_edges))) and
-      []
-      |> Enum.all?(&(not line_intersects_polygon(&1, polygon_edges)))
-  end
+  def rect_crosses({ax, ay}, {bx, by}, edges) do
+    rect_lines = [
+      [{ax, ay}, {bx, ay}],
+      [{bx, ay}, {bx, by}],
+      [{bx, by}, {ax, by}],
+      [{ax, by}, {ax, ay}]
+    ]
 
-  def line_intersects_polygon({x1, y1, x2, y2}, edges) do
-  end
-
-  def vertices_to_edges(vertices) when length(vertices) <= 2,
-    do: raise("Not enough vertices to form a polygon")
-
-  def vertices_to_edges(vertices) do
-    (vertices ++ [hd(vertices)])
-    |> Enum.chunk_every(2, 1, :discard)
-  end
-
-  def point_on_edges({px, py}, edges) do
-    Enum.any?(edges, fn [{x1, y1}, {x2, y2}] ->
-      (px - x1) * (y2 - y1) - (py - y1) * (x2 - x1) == 0 and
-        px >= min(x1, x2) and px <= max(x1, x2) and
-        py >= min(y1, y2) and py <= max(y1, y2)
+    edges
+    |> Enum.any?(fn edge ->
+      rect_lines |> Enum.any?(fn rect_line -> aa_lines_cross(rect_line, edge) end)
     end)
   end
 
-  def point_inside_polygon?({px, py}, edges) do
-    Enum.reduce(edges, 0, fn [{x1, y1}, {x2, y2}], hits ->
-      if y1 > py != y2 > py do
-        intersects? =
-          if y2 > y1 do
-            (px - x1) * (y2 - y1) < (x2 - x1) * (py - y1)
-          else
-            (px - x2) * (y1 - y2) < (x1 - x2) * (py - y2)
-          end
+  def aa_lines_cross([{mx1, my1}, {mx2, my2}], [{nx1, ny1}, {nx2, ny2}])
+      when mx1 == nx1 and my1 == ny1
+      when mx1 == nx2 and my1 == ny2
+      when mx2 == nx1 and my2 == ny1
+      when mx2 == nx2 and my2 == ny2
+      when mx1 == nx1 and my1 == ny1 and mx2 == nx2 and my2 == ny2
+      when mx1 == nx2 and my1 == ny2 and mx2 == nx1 and my2 == ny1,
+      do: false
 
-        if intersects?, do: hits + 1, else: hits
-      else
-        hits
-      end
-    end)
-    |> Integer.mod(2) != 0
+  def aa_lines_cross([{mx1, my1}, {mx2, my2}], [{nx1, ny1}, {nx2, ny2}]) do
+    m_vertical = mx1 == mx2
+    n_vertical = nx1 == nx2
+
+    cond do
+      m_vertical and not n_vertical ->
+        mx1 > min(nx1, nx2) and mx1 < max(nx1, nx2) and
+          ny1 > min(my1, my2) and ny1 < max(my1, my2)
+
+      not m_vertical and n_vertical ->
+        nx1 > min(mx1, mx2) and nx1 < max(mx1, mx2) and
+          my1 > min(ny1, ny2) and my1 < max(ny1, ny2)
+
+      true ->
+        false
+    end
+  end
+
+  def vertices_to_edges(positions) do
+    (positions ++ [hd(positions)]) |> Enum.chunk_every(2, 1, :discard)
   end
 
   def build_areas(positions) do
