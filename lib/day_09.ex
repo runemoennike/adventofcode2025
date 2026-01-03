@@ -12,66 +12,62 @@ defmodule Day09 do
     end)
   end
 
-  def part1(positions) do
-    positions
+  def part1(points) do
+    points
     |> build_areas()
     |> Enum.map(&elem(&1, 0))
     |> Enum.max()
   end
 
-  def part2(positions) do
-    edges = vertices_to_edges(positions)
-
-    positions
-    |> build_areas()
-    |> Enum.sort_by(&elem(&1, 0), :desc)
-    |> Enum.find(fn {_area, a, b} -> not rect_crosses(a, b, edges) end)
-    |> then(&elem(&1, 0))
+  def part2(points) do
+    edges = points |> polygon_edges()
+    lookup = points |> compress
+    map = lookup |> generate_map |> rasterise_edges(edges)
   end
 
-  def rect_crosses({ax, ay}, {bx, by}, edges) do
-    rect_lines = [
-      [{ax, ay}, {bx, ay}],
-      [{bx, ay}, {bx, by}],
-      [{bx, by}, {ax, by}],
-      [{ax, by}, {ax, ay}]
-    ]
+  def rasterise_edges(map, edges) do
+    edges |> Enum.reduce(map, &rasterise_edge/2)
+  end
 
-    edges
-    |> Enum.any?(fn edge ->
-      rect_lines |> Enum.any?(fn rect_line -> aa_lines_cross(rect_line, edge) end)
+  def rasterise_edge(map, {{x, y1}, {x, y2}}) do
+    for y <- min(y1, y2)..max(y1..y2), do: y
+      |> Enum.reduce(map, fn y, map -> map
+  end
+
+  def rasterise_edge(map, {{x1, y}, {x2, y}}) do
+    nil
+  end
+
+  def rasterise_edge(_map, {{_x1, _y1}, {_x2, _y2}}),
+    do: raise("Can only rasterise horizontal and vertical edges.")
+
+  def generate_map(lookup) do
+    # Row first order
+    0 |> List.duplicate(length(lookup.x)) |> List.duplicate(length(lookup.y))
+  end
+
+  def compress(points) do
+    points
+    |> Enum.unzip()
+    |> then(fn {xs, ys} ->
+      %{
+        x: xs |> Enum.sort() |> Enum.dedup(),
+        y: ys |> Enum.sort() |> Enum.dedup()
+      }
     end)
   end
 
-  def aa_lines_cross([{mx1, my1}, {mx2, my2}], [{nx1, ny1}, {nx2, ny2}])
-      when mx1 == nx1 and my1 == ny1
-      when mx1 == nx2 and my1 == ny2
-      when mx2 == nx1 and my2 == ny1
-      when mx2 == nx2 and my2 == ny2
-      when mx1 == nx1 and my1 == ny1 and mx2 == nx2 and my2 == ny2
-      when mx1 == nx2 and my1 == ny2 and mx2 == nx1 and my2 == ny1,
-      do: false
-
-  def aa_lines_cross([{mx1, my1}, {mx2, my2}], [{nx1, ny1}, {nx2, ny2}]) do
-    m_vertical = mx1 == mx2
-    n_vertical = nx1 == nx2
-
-    cond do
-      m_vertical and not n_vertical ->
-        mx1 > min(nx1, nx2) and mx1 < max(nx1, nx2) and
-          ny1 > min(my1, my2) and ny1 < max(my1, my2)
-
-      not m_vertical and n_vertical ->
-        nx1 > min(mx1, mx2) and nx1 < max(mx1, mx2) and
-          my1 > min(ny1, ny2) and my1 < max(ny1, ny2)
-
-      true ->
-        false
-    end
+  def rect_edges({ax, ay}, {bx, by}) do
+    [
+      {{ax, ay}, {bx, ay}},
+      {{bx, ay}, {bx, by}},
+      {{bx, by}, {bx, ay}},
+      {{bx, ay}, {ax, ay}}
+    ]
   end
 
-  def vertices_to_edges(positions) do
-    (positions ++ [hd(positions)]) |> Enum.chunk_every(2, 1, :discard)
+  def polygon_edges(points) do
+    points |> Enum.zip(points.drop(1) ++ [hd(points)])
   end
 
   def build_areas(positions) do
