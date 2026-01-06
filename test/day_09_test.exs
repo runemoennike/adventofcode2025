@@ -1,5 +1,5 @@
 defmodule Day09Test do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import Day09
 
@@ -64,11 +64,40 @@ defmodule Day09Test do
     assert 24 == result
   end
 
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_09.txt")
-  #
-  #   result = input |> parse() |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+  test "rasterise edges", %{input: input} do
+    points = input |> parse()
+    edges = points |> polygon_edges()
+    lookup = points |> compress
+    map = lookup |> generate_map |> rasterise_edges(edges, lookup)
+
+    # ..............
+    # .......#XXX#..
+    # .......X...X..
+    # ..#XXXX#...X..
+    # ..X........X..
+    # ..#XXXXXX#.X..
+    # .........X.X..
+    # .........#X#..
+    # ..............
+    # v
+    # ...#X#..
+    # ..##.X..
+    # ..#X#X..
+    # ....##..
+
+    assert [
+             [0, 1, 1, 1],
+             [1, 1, 0, 1],
+             [1, 1, 1, 1],
+             [0, 0, 1, 1]
+           ] = map
+  end
+
+  test "part2" do
+    input = File.read!("./puzzle_input/day_09.txt")
+
+    result = input |> parse() |> part2()
+
+    IO.puts("Part 2: #{result}")
+  end
 end

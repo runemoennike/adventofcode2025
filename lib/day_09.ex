@@ -21,24 +21,89 @@ defmodule Day09 do
 
   def part2(points) do
     edges = points |> polygon_edges()
-    lookup = points |> compress |> IO.inspect()
-    map = lookup |> generate_map |> rasterise_edges(edges, lookup) |> IO.inspect()
+    lookup = points |> compress()
+    map = lookup |> generate_map |> rasterise_edges(edges, lookup) |> fill |> print_map
+  end
+
+  def print_map(map) do
+    map
+    |> tap(
+      &Enum.each(&1, fn line ->
+        line
+        |> Enum.each(fn
+          0 -> IO.write(".")
+          1 -> IO.write("#")
+        end)
+
+        IO.puts("")
+      end)
+    )
+  end
+
+  def fill(map) do
+    {x, y} =
+      Enum.find_value(1..(length(map) - 2), fn y ->
+        Enum.find_value(1..(length(hd(map)) - 2), fn x ->
+          map |> Enum.at(y) |> Enum.at(x) == 0 &&
+            inside?(map, {x, y}) && {x, y}
+        end)
+      end)
+
+    IO.inspect({x, y})
+    flood(map, x, y)
+  end
+
+  defp flood(map, x, y) do
+    cond do
+      x < 0 or y < 0 or
+        y >= length(map) or
+        x >= length(hd(map)) or
+          map |> Enum.at(y) |> Enum.at(x) == 1 ->
+        map
+
+      true ->
+        map
+        |> update_in([Access.at(y), Access.at(x)], fn _ -> 1 end)
+        |> flood(x + 1, y)
+        |> flood(x - 1, y)
+        |> flood(x, y + 1)
+        |> flood(x, y - 1)
+    end
+  end
+
+  def inside?(map, {x, y}) do
+    map
+    |> Enum.at(y)
+    |> Enum.drop(x + 1)
+    |> Enum.chunk_every(2, 1, :discard)
+    |> then(fn l ->
+      Enum.count(l, fn [a, b] -> a == 1 and b == 0 end)
+    end)
+    |> rem(2) == 1
   end
 
   def rasterise_edges(map, edges, lookup) do
-    edges |> encode(lookup) |> Enum.reduce(map, fn edge, map -> rasterise_edge(map, edge) end)
+    edges
+    |> encode(lookup)
+    |> Enum.reduce(map, fn edge, map -> rasterise_edge(map, edge) end)
   end
 
   def rasterise_edge(map, {{x, y1}, {x, y2}}) do
+    ya = min(y1, y2)
+    yb = max(y1, y2)
+
     map
     |> Enum.with_index()
     |> Enum.map(fn
-      {_v, y} when y in y1..y2//1 -> map |> Enum.at(y) |> List.replace_at(x, 1)
+      {_v, y} when y in ya..yb//1 -> map |> Enum.at(y) |> List.replace_at(x, 1)
       {v, _y} -> v
     end)
   end
 
   def rasterise_edge(map, {{x1, y}, {x2, y}}) do
+    xa = min(x1, x2)
+    xb = max(x1, x2)
+
     map
     |> List.replace_at(
       y,
@@ -46,7 +111,7 @@ defmodule Day09 do
       |> Enum.at(y)
       |> Enum.with_index()
       |> Enum.map(fn
-        {_v, x} when x in x1..x2//1 -> 1
+        {_v, x} when x in xa..xb//1 -> 1
         {v, _x} -> v
       end)
     )
@@ -57,12 +122,13 @@ defmodule Day09 do
 
   def generate_map(lookup) do
     # Row major order, i.e. map[y][x]
-    0 |> List.duplicate(length(lookup.x)) |> List.duplicate(length(lookup.y))
+    0 |> List.duplicate(map_size(lookup.x)) |> List.duplicate(map_size(lookup.y))
   end
 
-  def encode([head | tail]), do: [encode(head) | encode(tail)]
-  def encode({{_, _} = a, {_, _} = b}), do: {encode(a), encode(b)}
-  def encode({x, y}, lookup), do: {lookup.x[x], lookup.y[y]}
+  def encode([], _lookup), do: []
+  def encode([head | tail], lookup), do: [encode(head, lookup) | encode(tail, lookup)]
+  def encode({{_, _} = a, {_, _} = b}, lookup), do: {encode(a, lookup), encode(b, lookup)}
+  def encode({x, y}, lookup), do: {lookup.x_rev[x], lookup.y_rev[y]}
 
   def compress(points) do
     points
@@ -72,8 +138,8 @@ defmodule Day09 do
       y = ys |> Enum.sort() |> Enum.dedup()
 
       %{
-        x: x,
-        y: y,
+        x: x |> Enum.with_index() |> Map.new(fn {v, idx} -> {idx, v} end),
+        y: y |> Enum.with_index() |> Map.new(fn {v, idx} -> {idx, v} end),
         x_rev: x |> Enum.with_index() |> Map.new(),
         y_rev: y |> Enum.with_index() |> Map.new()
       }
