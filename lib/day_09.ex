@@ -1,6 +1,8 @@
 defmodule Day09 do
   use Memoize
 
+  @directions [{1, 0}, {-1, 0}, {0, 1}, {0, -1}]
+
   def parse(input) do
     input
     |> String.split(["\n", "\r\n"], trim: true)
@@ -41,45 +43,44 @@ defmodule Day09 do
   end
 
   def fill(map) do
-    {x, y} =
-      Enum.find_value(1..(length(map) - 2), fn y ->
-        Enum.find_value(1..(length(hd(map)) - 2), fn x ->
-          map |> Enum.at(y) |> Enum.at(x) == 0 &&
-            inside?(map, {x, y}) && {x, y}
-        end)
-      end)
+    x = Integer.floor_div(length(hd(map)), 2)
 
-    IO.inspect({x, y})
-    flood(map, x, y)
+    for(
+      y <- Integer.floor_div(length(map), 2)..0//-1,
+      get_in(map, [Access.at(y), Access.at(x)]) == 0,
+      do: y
+    )
+    |> Enum.reduce_while(map, fn y, map ->
+      IO.inspect({x, y, flood(map, x, y)})
+
+      case flood(map, x, y) do
+        {:ok, filled_map} -> {:halt, filled_map}
+        {:fail, _} -> {:cont, map}
+      end
+    end)
+    |> print_map
   end
 
   defp flood(map, x, y) do
     cond do
-      x < 0 or y < 0 or
-        y >= length(map) or
-        x >= length(hd(map)) or
-          map |> Enum.at(y) |> Enum.at(x) == 1 ->
-        map
+      x < 0 or y < 0 or y >= length(map) or x >= length(hd(map)) ->
+        {:fail, nil}
+
+      map |> Enum.at(y) |> Enum.at(x) == 1 ->
+        {:ok, map}
 
       true ->
         map
         |> update_in([Access.at(y), Access.at(x)], fn _ -> 1 end)
-        |> flood(x + 1, y)
-        |> flood(x - 1, y)
-        |> flood(x, y + 1)
-        |> flood(x, y - 1)
+        |> then(fn map ->
+          Enum.reduce(@directions, {:ok, map}, fn {dx, dy}, {status, cur_map} ->
+            case flood(cur_map, x + dx, y + dy) do
+              {:fail, next_map} -> {:fail, next_map}
+              {:ok, next_map} -> {status, next_map}
+            end
+          end)
+        end)
     end
-  end
-
-  def inside?(map, {x, y}) do
-    map
-    |> Enum.at(y)
-    |> Enum.drop(x + 1)
-    |> Enum.chunk_every(2, 1, :discard)
-    |> then(fn l ->
-      Enum.count(l, fn [a, b] -> a == 1 and b == 0 end)
-    end)
-    |> rem(2) == 1
   end
 
   def rasterise_edges(map, edges, lookup) do

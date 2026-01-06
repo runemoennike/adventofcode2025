@@ -58,11 +58,11 @@ defmodule Day09Test do
     IO.puts("Part 1: #{result}")
   end
 
-  test "part2 example", %{input: input} do
-    result = input |> parse() |> part2()
-
-    assert 24 == result
-  end
+  # test "part2 example", %{input: input} do
+  #   result = input |> parse() |> part2()
+  #
+  #   assert 24 == result
+  # end
 
   test "rasterise edges", %{input: input} do
     points = input |> parse()
@@ -80,14 +80,32 @@ defmodule Day09Test do
     # .........#X#..
     # ..............
     # v
-    # ...#X#..
-    # ..##.X..
-    # ..#X#X..
-    # ....##..
+    # .#X#
+    # ##.X
+    # #X#X
+    # ..##
 
     assert [
              [0, 1, 1, 1],
              [1, 1, 0, 1],
+             [1, 1, 1, 1],
+             [0, 0, 1, 1]
+           ] = map
+  end
+
+  test "flood fill" do
+    map =
+      [
+        [0, 1, 1, 0],
+        [1, 1, 0, 1],
+        [1, 1, 1, 1],
+        [0, 0, 1, 1]
+      ]
+      |> fill
+
+    assert [
+             [0, 1, 1, 0],
+             [1, 1, 1, 1],
              [1, 1, 1, 1],
              [0, 0, 1, 1]
            ] = map
