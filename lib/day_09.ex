@@ -22,7 +22,7 @@ defmodule Day09 do
   def part2(points) do
     edges = points |> polygon_edges()
     lookup = points |> compress()
-    map = lookup |> generate_map |> rasterise_edges(edges, lookup) |> fill
+    map = generate_map(lookup) |> rasterise_edges(edges, lookup) |> fill() |> nested_to_tuple()
 
     points
     |> build_areas()
@@ -31,6 +31,8 @@ defmodule Day09 do
     |> Enum.find(fn {_area, a, b} -> !is_oob(rect_edges(a, b), map) end)
     |> then(fn {area, _a, _b} -> area end)
   end
+
+  def nested_to_tuple(list), do: Enum.map(list, &List.to_tuple/1) |> List.to_tuple()
 
   def is_oob({{ax, ay} = a, {bx, by} = b}, map) do
     is_oob({ax, by}, map) or is_oob({bx, ay}, map) or
@@ -42,7 +44,7 @@ defmodule Day09 do
 
   def is_oob([], _map), do: false
   def is_oob([h | t], map), do: is_oob(h, map) or is_oob(t, map)
-  def is_oob({x, y}, map), do: get_in(map, [Access.at(y), Access.at(x)]) == 0
+  def is_oob({x, y}, map), do: map |> elem(y) |> elem(x) == 0
 
   def get_edge_coordinates({x, y1}, {x, y2}) when y1 <= y2, do: for(y <- y1..y2//1, do: {x, y})
   def get_edge_coordinates({x, y1}, {x, y2}) when y1 > y2, do: for(y <- y2..y1//1, do: {x, y})
