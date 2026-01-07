@@ -24,8 +24,36 @@ defmodule Day09 do
   def part2(points) do
     edges = points |> polygon_edges()
     lookup = points |> compress()
-    map = lookup |> generate_map |> rasterise_edges(edges, lookup) |> fill |> print_map
+    map = lookup |> generate_map |> rasterise_edges(edges, lookup) |> fill
+
+    points
+    |> build_areas()
+    |> Enum.sort_by(&elem(&1, 0), :desc)
+    |> Enum.map(fn {area, a, b} -> {area, encode(a, lookup), encode(b, lookup)} end)
+    |> Enum.find(fn {_area, a, b} -> !is_oob(rect_edges(a, b), map) end)
+    |> then(fn {area, _a, _b} -> area end)
   end
+
+  def is_oob([], _map), do: false
+  def is_oob([h | t], map), do: is_oob(h, map) or is_oob(t, map)
+
+  def is_oob({x, y}, map) when is_integer(x) and is_integer(y),
+    do: get_in(map, [Access.at(y), Access.at(x)]) == 0
+
+  def is_oob({{ax, ay} = a, {bx, by} = b}, map) do
+    is_oob({ax, by}, map) or is_oob({bx, ay}, map) or
+      get_edge_coordinates(a, b)
+      |> Enum.any?(fn {x, y} ->
+        is_oob({x, y}, map)
+      end)
+  end
+
+  def get_edge_coordinates({x, y1}, {x, y2}) when y1 <= y2, do: for(y <- y1..y2//1, do: {x, y})
+  def get_edge_coordinates({x, y1}, {x, y2}) when y1 > y2, do: for(y <- y2..y1//1, do: {x, y})
+  def get_edge_coordinates({x1, y}, {x2, y}) when x1 <= x2, do: for(x <- x1..x2//1, do: {x, y})
+  def get_edge_coordinates({x1, y}, {x2, y}) when x1 > x2, do: for(x <- x2..x1//1, do: {x, y})
+
+  def get_edge_coordinates({_x1, _y1}, {_x2, _y2}), do: raise("Can only do rectilinear lines.")
 
   def print_map(map) do
     map
@@ -51,14 +79,11 @@ defmodule Day09 do
       do: y
     )
     |> Enum.reduce_while(map, fn y, map ->
-      IO.inspect({x, y, flood(map, x, y)})
-
       case flood(map, x, y) do
         {:ok, filled_map} -> {:halt, filled_map}
         {:fail, _} -> {:cont, map}
       end
     end)
-    |> print_map
   end
 
   defp flood(map, x, y) do
@@ -119,7 +144,7 @@ defmodule Day09 do
   end
 
   def rasterise_edge(_map, {{_x1, _y1}, {_x2, _y2}}),
-    do: raise("Can only rasterise horizontal and vertical edges.")
+    do: raise("Can only rasterise rectilinear lines.")
 
   def generate_map(lookup) do
     # Row major order, i.e. map[y][x]
@@ -142,17 +167,19 @@ defmodule Day09 do
         x: x |> Enum.with_index() |> Map.new(fn {v, idx} -> {idx, v} end),
         y: y |> Enum.with_index() |> Map.new(fn {v, idx} -> {idx, v} end),
         x_rev: x |> Enum.with_index() |> Map.new(),
-        y_rev: y |> Enum.with_index() |> Map.new()
+        y_rev: y |> Enum.with_index() |> Map.new(),
+        valid_x: MapSet.new(x),
+        valid_y: MapSet.new(y)
       }
     end)
   end
 
   def rect_edges({ax, ay}, {bx, by}) do
     [
-      {{ax, ay}, {bx, ay}},
+      # {{ax, ay}, {bx, ay}},
       {{bx, ay}, {bx, by}},
-      {{bx, by}, {bx, ay}},
-      {{bx, ay}, {ax, ay}}
+      # {{bx, by}, {ax, by}},
+      {{ax, by}, {ax, ay}}
     ]
   end
 

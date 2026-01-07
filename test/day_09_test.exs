@@ -58,11 +58,11 @@ defmodule Day09Test do
     IO.puts("Part 1: #{result}")
   end
 
-  # test "part2 example", %{input: input} do
-  #   result = input |> parse() |> part2()
-  #
-  #   assert 24 == result
-  # end
+  test "part2 example", %{input: input} do
+    result = input |> parse() |> part2()
+
+    assert 24 == result
+  end
 
   test "rasterise edges", %{input: input} do
     points = input |> parse()
