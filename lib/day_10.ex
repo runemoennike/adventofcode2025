@@ -1,4 +1,6 @@
 defmodule Day10 do
+  import Bitwise
+
   def parse(input) do
     input
     |> String.split(["\n", "\r\n"], trim: true)
@@ -45,14 +47,34 @@ defmodule Day10 do
 
   def part1(problems) do
     problems
-    |> Enum.map(fn %{goal: goal, actions: actions} -> solve(goal, actions) end)
-    |> Enum.map(length / 1)
+    |> Enum.map(fn %{goal: goal, actions: actions} ->
+      IO.inspect(actions, label: "Actions")
+      solve(goal, actions)
+    end)
+    |> Enum.map(fn sols -> Enum.sort_by(sols, &length/1) end)
+    |> IO.inspect(limit: :infinity)
+    |> Enum.map(&length/1)
     |> Enum.sum()
   end
 
-  def solve(goal, actions), do: solve(goal, actions, 0, [])
-  def solve(goal, actions, state, [h | _t] = path) when bxor(state, step) == goal, do: path
+  def solve(goal, actions), do: solve(0, goal, actions, [])
+  def solve(_state, _goal, [], _history), do: []
 
-  def solve(goal, actions, path) do
+  def solve(state, goal, actions, history) do
+    actions
+    |> Enum.flat_map(fn action ->
+      new_history = [action | history]
+      new_state = bxor(state, action)
+
+      # IO.puts("#{state} + #{action} -> #{new_state}")
+      # IO.inspect(history)
+
+      if new_state == goal do
+        [new_history]
+      else
+        new_actions = actions |> List.delete(action)
+        solve(new_state, goal, new_actions, new_history)
+      end
+    end)
   end
 end

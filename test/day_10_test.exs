@@ -35,11 +35,11 @@ defmodule Day10Test do
            ] == result
   end
 
-  # test "part1 example", %{input: input} do
-  #   result = input |> parse() |> part1()
-  #
-  #   assert 7 == result
-  # end
+  test "part1 example", %{input: input} do
+    result = input |> parse() |> part1()
+
+    assert 7 == result
+  end
 
   # test "part1" do
   #   input = File.read!("./puzzle_input/day_09.txt")
