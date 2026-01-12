@@ -23,12 +23,12 @@ defmodule Day10Test do
                reqs: {3, 5, 4, 7}
              },
              %{
-               goal: 0b00010,
+               goal: 0b01000,
                actions: [0b11101, 0b01100, 0b10001, 0b00111, 0b11110],
                reqs: {7, 5, 12, 7, 2}
              },
              %{
-               goal: 0b011101,
+               goal: 0b101110,
                actions: [0b011111, 0b011001, 0b110111, 0b000110],
                reqs: {10, 11, 11, 5, 10, 5}
              }
@@ -41,14 +41,14 @@ defmodule Day10Test do
     assert 7 == result
   end
 
-  # test "part1" do
-  #   input = File.read!("./puzzle_input/day_09.txt")
-  #
-  #   result = input |> parse() |> part1()
-  #
-  #   IO.puts("Part 1: #{result}")
-  # end
-  #
+  test "part1" do
+    input = File.read!("./puzzle_input/day_10.txt")
+
+    result = input |> parse() |> part1()
+
+    IO.puts("Part 1: #{result}")
+  end
+
   # test "part2 example", %{input: input} do
   #   result = input |> parse() |> part2()
   #

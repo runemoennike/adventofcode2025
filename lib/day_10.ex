@@ -5,8 +5,8 @@ defmodule Day10 do
     input
     |> String.split(["\n", "\r\n"], trim: true)
     |> Enum.map(fn l ->
-      l
-      |> String.split(" ")
+      String.split(l, " ")
+      |> Enum.map(fn s -> String.slice(s, 1, String.length(s) - 2) end)
       |> then(fn segments ->
         %{
           goal: parse_goal(hd(segments)),
@@ -19,9 +19,7 @@ defmodule Day10 do
 
   def parse_goal(input) do
     input
-    |> String.slice(1, String.length(input) - 2)
     |> String.graphemes()
-    |> Enum.reverse()
     |> Enum.with_index()
     |> Enum.sum_by(fn
       {".", _} -> 0
@@ -31,7 +29,6 @@ defmodule Day10 do
 
   def parse_action(input) do
     input
-    |> String.slice(1, String.length(input) - 2)
     |> String.split(",")
     |> Enum.map(&String.to_integer/1)
     |> Enum.sum_by(fn n -> 2 ** n end)
@@ -39,7 +36,6 @@ defmodule Day10 do
 
   def parse_reqs(input) do
     input
-    |> String.slice(1, String.length(input) - 2)
     |> String.split(",")
     |> Enum.map(&String.to_integer/1)
     |> List.to_tuple()
@@ -47,34 +43,38 @@ defmodule Day10 do
 
   def part1(problems) do
     problems
-    |> Enum.map(fn %{goal: goal, actions: actions} ->
-      IO.inspect(actions, label: "Actions")
-      solve(goal, actions)
-    end)
-    |> Enum.map(fn sols -> Enum.sort_by(sols, &length/1) end)
-    |> IO.inspect(limit: :infinity)
-    |> Enum.map(&length/1)
+    |> Enum.map(fn %{goal: goal, actions: actions} -> solve(goal, actions) |> hd() |> length() end)
     |> Enum.sum()
   end
 
-  def solve(goal, actions), do: solve(0, goal, actions, [])
-  def solve(_state, _goal, [], _history), do: []
+  def solve(goal, actions) do
+    for(depth <- 1..length(actions), do: depth)
+    |> Enum.reduce_while(nil, fn depth, _acc ->
+      case solve(0, goal, actions, [], depth) do
+        [] -> {:cont, nil}
+        solution -> {:halt, solution}
+      end
+    end)
+  end
 
-  def solve(state, goal, actions, history) do
+  def solve(_state, _goal, [], _history, _depth), do: []
+  def solve(_state, _goal, _actions, _history, 0), do: []
+
+  def solve(state, goal, actions, history, depth) do
     actions
     |> Enum.flat_map(fn action ->
       new_history = [action | history]
       new_state = bxor(state, action)
-
-      # IO.puts("#{state} + #{action} -> #{new_state}")
-      # IO.inspect(history)
+      new_depth = depth - 1
 
       if new_state == goal do
         [new_history]
       else
         new_actions = actions |> List.delete(action)
-        solve(new_state, goal, new_actions, new_history)
+        solve(new_state, goal, new_actions, new_history, new_depth)
       end
     end)
   end
+
+  def bits(n), do: for(<<(b::1 <- <<n>>)>>, do: b) |> Enum.join()
 end
