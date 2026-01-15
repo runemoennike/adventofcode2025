@@ -1,5 +1,6 @@
 defmodule Day10 do
   import Bitwise
+  use Helpers.TupleOps
 
   def parse(input) do
     input
@@ -87,163 +88,46 @@ defmodule Day10 do
   def solve_vector(goal, actions) do
     IO.inspect(goal, label: "SOLVING -----------------")
 
-    for(depth <- 1..20, do: depth)
-    |> Enum.reduce_while(nil, fn depth, _acc ->
-      IO.inspect(depth)
+    affections = affection_map(actions) |> Map.to_list() |> Enum.sort(fn {_k, v} -> length(v) end)
+    state = Tuple.duplicate(0, tuple_size(goal))
 
-      case solve_vector(Tuple.duplicate(0, tuple_size(goal)), goal, actions, 0, depth) do
-        nil -> {:cont, nil}
-        solution -> {:halt, solution}
-      end
-    end)
+    solve_vector(state, goal, affections)
+    |> IO.inspect()
   end
 
-  def solve_vector({s1}, {g1}, _actions, _history, _depth) when s1 > g1, do: nil
+  # Heavily inspired by https://github.com/michel-kraemer/adventofcode-rust/blob/main/2025/day10/src/main.rs
+  # min?
+  def solve_vector(state, goal, [{bidx, buttons} | rem_affections]) do
+    jolt_max = elem(goal, bidx)
+    jolt_state = elem(state, bidx)
+    comps = distribute(length(buttons), jolt_max - jolt_state)
 
-  def solve_vector({s1, s2}, {g1, g2}, _actions, _history, _depth) when s1 > g1 when s2 > g2,
-    do: nil
-
-  def solve_vector({s1, s2, s3}, {g1, g2, g3}, _actions, _history, _depth)
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3,
-      do: nil
-
-  def solve_vector({s1, s2, s3, s4}, {g1, g2, g3, g4}, _actions, _history, _depth)
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4,
-      do: nil
-
-  def solve_vector({s1, s2, s3, s4, s5}, {g1, g2, g3, g4, g5}, _actions, _history, _depth)
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5,
-      do: nil
-
-  def solve_vector({s1, s2, s3, s4, s5, s6}, {g1, g2, g3, g4, g5, g6}, _actions, _history, _depth)
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5
-      when s6 > g6,
-      do: nil
-
-  def solve_vector(
-        {s1, s2, s3, s4, s5, s6, s7},
-        {g1, g2, g3, g4, g5, g6, g7},
-        _actions,
-        _history,
-        _depth
-      )
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5
-      when s6 > g6
-      when s7 > g7,
-      do: nil
-
-  def solve_vector(
-        {s1, s2, s3, s4, s5, s6, s7, s8},
-        {g1, g2, g3, g4, g5, g6, g7, g8},
-        _actions,
-        _history,
-        _depth
-      )
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5
-      when s6 > g6
-      when s7 > g7
-      when s8 > g8,
-      do: nil
-
-  def solve_vector(
-        {s1, s2, s3, s4, s5, s6, s7, s8, s9},
-        {g1, g2, g3, g4, g5, g6, g7, g8, g9},
-        _actions,
-        _history,
-        _depth
-      )
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5
-      when s6 > g6
-      when s7 > g7
-      when s8 > g8
-      when s9 > g9,
-      do: nil
-
-  def solve_vector(
-        {s1, s2, s3, s4, s5, s6, s7, s8, s9, s10},
-        {g1, g2, g3, g4, g5, g6, g7, g8, g9, g10},
-        _actions,
-        _history,
-        _depth
-      )
-      when s1 > g1
-      when s2 > g2
-      when s3 > g3
-      when s4 > g4
-      when s5 > g5
-      when s6 > g6
-      when s7 > g7
-      when s8 > g8
-      when s9 > g9
-      when s10 > g10,
-      do: nil
-
-  def solve_vector(_state, _goal, _actions, _history, 0), do: nil
-
-  def solve_vector(state, goal, actions, history, depth) do
-    actions
-    |> Enum.reduce_while(nil, fn action, _acc ->
-      new_history = history + 1
-      new_state = add(state, action)
-      new_depth = depth - 1
-
-      if new_state == goal do
-        {:halt, new_history}
-      else
-        case solve_vector(new_state, goal, actions, new_history, new_depth) do
-          nil -> {:cont, nil}
-          v -> {:halt, v}
-        end
-      end
-    end)
+    # actions
+    # |> Enum.reduce(min, fn action, new_min ->
+    #   new_state = add(state, action)
+    #
+    #   cond do
+    #     new_state == goal ->
+    #       min(new_count, min)
+    #
+    #     greater_than?(new_state, goal) ->
+    #       new_min
+    #
+    #     true ->
+    #       min(count + solve_vector(new_state, goal, actions, new_count, new_min), new_min)
+    #   end
+    # end)
   end
 
-  def add({a1}, {b1}), do: {a1 + b1}
-  def add({a1, a2}, {b1, b2}), do: {a1 + b1, a2 + b2}
-  def add({a1, a2, a3}, {b1, b2, b3}), do: {a1 + b1, a2 + b2, a3 + b3}
-  def add({a1, a2, a3, a4}, {b1, b2, b3, b4}), do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4}
+  def affection_map(actions) do
+    for idx <- 0..(tuple_size(hd(actions)) - 1), into: %{} do
+      {idx, actions |> Enum.filter(&(elem(&1, idx) == 1))}
+    end
+  end
 
-  def add({a1, a2, a3, a4, a5}, {b1, b2, b3, b4, b5}),
-    do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5}
+  defp distribute(0, 0), do: [[]]
+  defp distribute(0, _), do: []
 
-  def add({a1, a2, a3, a4, a5, a6}, {b1, b2, b3, b4, b5, b6}),
-    do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5, a6 + b6}
-
-  def add({a1, a2, a3, a4, a5, a6, a7}, {b1, b2, b3, b4, b5, b6, b7}),
-    do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5, a6 + b6, a7 + b7}
-
-  def add({a1, a2, a3, a4, a5, a6, a7, a8}, {b1, b2, b3, b4, b5, b6, b7, b8}),
-    do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5, a6 + b6, a7 + b7, a8 + b8}
-
-  def add({a1, a2, a3, a4, a5, a6, a7, a8, a9}, {b1, b2, b3, b4, b5, b6, b7, b8, b9}),
-    do: {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5, a6 + b6, a7 + b7, a8 + b8, a9 + b9}
-
-  def add({a1, a2, a3, a4, a5, a6, a7, a8, a9, a10}, {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10}),
-    do:
-      {a1 + b1, a2 + b2, a3 + b3, a4 + b4, a5 + b5, a6 + b6, a7 + b7, a8 + b8, a9 + b9, a10 + b10}
+  defp distribute(num_buckets, sum),
+    do: for(x <- 0..sum, rest <- distribute(num_buckets - 1, sum - x), do: [x | rest])
 end

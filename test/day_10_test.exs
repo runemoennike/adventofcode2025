@@ -78,17 +78,66 @@ defmodule Day10Test do
     end
   end
 
+  test "tuple elementwise subtraction" do
+    for l <- 1..10 do
+      t = 1..l |> Enum.to_list() |> List.to_tuple()
+      s = Tuple.duplicate(0, l)
+      assert s == sub(t, t)
+    end
+  end
+
+  test "tuple elementwise greater than" do
+    for l <- 1..10 do
+      a = 1..l |> Enum.to_list() |> List.to_tuple()
+      b = 2..(l + 1) |> Enum.to_list() |> List.to_tuple()
+      assert greater_than?(b, a)
+      assert not greater_than?(a, b)
+      assert not greater_than?(a, a)
+    end
+  end
+
+  test "affection map", %{input: input} do
+    result =
+      input
+      |> parse()
+      |> Enum.map(fn %{action_vectors: actions} -> affection_map(actions) end)
+
+    assert [
+             %{
+               0 => [{1, 0, 1, 0}, {1, 1, 0, 0}],
+               1 => [{0, 1, 0, 1}, {1, 1, 0, 0}],
+               2 => [{0, 0, 1, 0}, {0, 0, 1, 1}, {1, 0, 1, 0}],
+               3 => [{0, 0, 0, 1}, {0, 1, 0, 1}, {0, 0, 1, 1}]
+             },
+             %{
+               0 => [{1, 0, 1, 1, 1}, {1, 0, 0, 0, 1}, {1, 1, 1, 0, 0}],
+               1 => [{1, 1, 1, 0, 0}, {0, 1, 1, 1, 1}],
+               2 => [{1, 0, 1, 1, 1}, {0, 0, 1, 1, 0}, {1, 1, 1, 0, 0}, {0, 1, 1, 1, 1}],
+               3 => [{1, 0, 1, 1, 1}, {0, 0, 1, 1, 0}, {0, 1, 1, 1, 1}],
+               4 => [{1, 0, 1, 1, 1}, {1, 0, 0, 0, 1}, {0, 1, 1, 1, 1}]
+             },
+             %{
+               0 => [{1, 1, 1, 1, 1, 0}, {1, 0, 0, 1, 1, 0}, {1, 1, 1, 0, 1, 1}],
+               1 => [{1, 1, 1, 1, 1, 0}, {1, 1, 1, 0, 1, 1}, {0, 1, 1, 0, 0, 0}],
+               2 => [{1, 1, 1, 1, 1, 0}, {1, 1, 1, 0, 1, 1}, {0, 1, 1, 0, 0, 0}],
+               3 => [{1, 1, 1, 1, 1, 0}, {1, 0, 0, 1, 1, 0}],
+               4 => [{1, 1, 1, 1, 1, 0}, {1, 0, 0, 1, 1, 0}, {1, 1, 1, 0, 1, 1}],
+               5 => [{1, 1, 1, 0, 1, 1}]
+             }
+           ] == result
+  end
+
   test "part2 example", %{input: input} do
     result = input |> parse() |> part2()
 
     assert 33 == result
   end
-
-  test "part2" do
-    input = File.read!("./puzzle_input/day_10.txt")
-
-    result = input |> parse() |> part2()
-
-    IO.puts("Part 2: #{result}")
-  end
+  #
+  # test "part2" do
+  #   input = File.read!("./puzzle_input/day_10.txt")
+  #
+  #   result = input |> parse() |> part2()
+  #
+  #   IO.puts("Part 2: #{result}")
+  # end
 end
