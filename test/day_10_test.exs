@@ -127,17 +127,25 @@ defmodule Day10Test do
            ] == result
   end
 
+  test "distribute" do
+    assert [[1]] == distribute(1, 1)
+    assert [[0, 1], [1, 0]] == distribute(2, 1)
+    assert [[0, 0, 1], [0, 1, 0], [1, 0, 0]] == distribute(3, 1)
+    assert [[0, 2], [1, 1], [2, 0]] == distribute(2, 2)
+  end
+
   test "part2 example", %{input: input} do
     result = input |> parse() |> part2()
 
     assert 33 == result
   end
-  #
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_10.txt")
-  #
-  #   result = input |> parse() |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+
+
+  test "part2" do
+    input = File.read!("./puzzle_input/day_10.txt")
+
+    result = input |> parse() |> part2()
+
+    IO.puts("Part 2: #{result}")
+  end
 end

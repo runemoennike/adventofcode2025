@@ -22,11 +22,22 @@ defmodule Helpers.TupleOps do
 
         a_tuple = {:{}, [], a_vars}
         b_tuple = {:{}, [], b_vars}
+        b_scalar = Macro.var(:b, nil)
 
         add_tuple =
           {:{}, [],
            Enum.zip(a_vars, b_vars)
            |> Enum.map(fn {a, b} -> {:+, meta, [a, b]} end)}
+
+        mul_tuple =
+          {:{}, [],
+           Enum.zip(a_vars, b_vars)
+           |> Enum.map(fn {a, b} -> {:*, meta, [a, b]} end)}
+
+        mul_scalar =
+          {:{}, [],
+           a_vars
+           |> Enum.map(fn a -> {:*, meta, [a, b_scalar]} end)}
 
         sub_tuple =
           {:{}, [],
@@ -45,13 +56,15 @@ defmodule Helpers.TupleOps do
 
         quote do
           def add(unquote(a_tuple), unquote(b_tuple)), do: unquote(add_tuple)
+          def mul(unquote(a_tuple), unquote(b_tuple)), do: unquote(mul_tuple)
+          def mul(unquote(a_tuple), unquote(b_scalar)), do: unquote(mul_scalar)
           def sub(unquote(a_tuple), unquote(b_tuple)), do: unquote(sub_tuple)
           def greater_than?(unquote(a_tuple), unquote(b_tuple)), do: unquote(any_tuple)
         end
       end
 
     quote do
-      unquote_splicing(blocks)
+      (unquote_splicing(blocks))
     end
   end
 end

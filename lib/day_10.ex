@@ -81,14 +81,16 @@ defmodule Day10 do
   def part2(problems) do
     problems
     |> Enum.sum_by(fn %{reqs: goal, action_vectors: actions} ->
-      solve_vector(goal, actions)
+      solve_vector(goal, actions) |> Enum.min
     end)
   end
 
   def solve_vector(goal, actions) do
     IO.inspect(goal, label: "SOLVING -----------------")
 
-    affections = affection_map(actions) |> Map.to_list() |> Enum.sort(fn {_k, v} -> length(v) end)
+    affections =
+      affection_map(actions) |> Map.to_list() |> Enum.sort_by(fn {_k, v} -> length(v) end)
+
     state = Tuple.duplicate(0, tuple_size(goal))
 
     solve_vector(state, goal, affections)
@@ -97,10 +99,32 @@ defmodule Day10 do
 
   # Heavily inspired by https://github.com/michel-kraemer/adventofcode-rust/blob/main/2025/day10/src/main.rs
   # min?
-  def solve_vector(state, goal, [{bidx, buttons} | rem_affections]) do
-    jolt_max = elem(goal, bidx)
-    jolt_state = elem(state, bidx)
-    comps = distribute(length(buttons), jolt_max - jolt_state)
+  def solve_vector(state, goal, [{jidx, buttons} | rem_affections]) do
+    jolt_max = elem(goal, jidx)
+    jolt_state = elem(state, jidx)
+    presses = jolt_max - jolt_state
+    combs = distribute(length(buttons), presses)
+
+    # IO.inspect(buttons, label: "Buttons")
+    # IO.inspect(combs, label: "Combs")
+
+    combs
+    |> Enum.flat_map(fn comb ->
+      comb_state =
+        comb
+        |> Enum.with_index()
+        |> Enum.reduce(state, fn {factor, idx}, s ->
+          add(s, mul(Enum.at(buttons, idx), factor))
+        end)
+
+      cond do
+        comb_state == goal -> [presses]
+        greater_than?(comb_state, goal) -> []
+        match?([], rem_affections) -> []
+        true -> solve_vector(comb_state, goal, rem_affections) |> Enum.map(& presses + &1)
+      end
+    end)
+    # |> Enum.min()
 
     # actions
     # |> Enum.reduce(min, fn action, new_min ->
@@ -125,9 +149,9 @@ defmodule Day10 do
     end
   end
 
-  defp distribute(0, 0), do: [[]]
-  defp distribute(0, _), do: []
+  def distribute(0, 0), do: [[]]
+  def distribute(0, _), do: []
 
-  defp distribute(num_buckets, sum),
+  def distribute(num_buckets, sum),
     do: for(x <- 0..sum, rest <- distribute(num_buckets - 1, sum - x), do: [x | rest])
 end
