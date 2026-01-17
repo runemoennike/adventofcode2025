@@ -81,72 +81,78 @@ defmodule Day10 do
   def part2(problems) do
     problems
     |> Enum.sum_by(fn %{reqs: goal, action_vectors: actions} ->
-      solve_vector(goal, actions) |> Enum.min
+      solve_vector(goal, actions) |> Enum.min()
     end)
   end
 
   def solve_vector(goal, actions) do
-    IO.inspect(goal, label: "SOLVING -----------------")
+    IO.inspect(goal, label: "SOLVING")
 
+    # We want to visit as few states as possibl, so try the joltages with fewest butons affecting
+    # them first. Fewer buttons affecting a joltage results in fewer states to branch frem as each
+    # recursion level.
     affections =
-      affection_map(actions) |> Map.to_list() |> Enum.sort_by(fn {_k, v} -> length(v) end)
+      affection_map(actions)
+      |> Map.to_list()
+      |> Enum.sort_by(fn {jidx, buttons} -> {length(buttons), -elem(goal, jidx)} end)
 
     state = Tuple.duplicate(0, tuple_size(goal))
 
-    solve_vector(state, goal, affections)
+    solve_vector(state, goal, affections, 0, nil)
     |> IO.inspect()
+    |> elem(0)
   end
 
+  def solve_vector(_state, _goal, [], _depth, _bound), do: {[], nil}
+
   # Heavily inspired by https://github.com/michel-kraemer/adventofcode-rust/blob/main/2025/day10/src/main.rs
-  # min?
-  def solve_vector(state, goal, [{jidx, buttons} | rem_affections]) do
+  def solve_vector(state, goal, [{jidx, buttons} | rem_affections], depth, bound) do
+    # Since each button can affect a slot with a value of no more than one, 
+    # we know we must press these buttons exactly as many times as the joltages required
+    # for the given slot. We just don't know which combination of affeting buttons to use.
     jolt_max = elem(goal, jidx)
     jolt_state = elem(state, jidx)
     presses = jolt_max - jolt_state
-    combs = distribute(length(buttons), presses)
 
-    # IO.inspect(buttons, label: "Buttons")
-    # IO.inspect(combs, label: "Combs")
+    if depth + presses >= bound do
+      {[], nil}
+    else
+      # TODO: Remove solutions list, keep only bound
 
-    combs
-    |> Enum.flat_map(fn comb ->
-      comb_state =
-        comb
-        |> Enum.with_index()
-        |> Enum.reduce(state, fn {factor, idx}, s ->
-          add(s, mul(Enum.at(buttons, idx), factor))
-        end)
+      # Try all possible ways to combine the required presses using the available buttons.
+      distribute(length(buttons), presses)
+      |> Enum.reduce({[], bound}, fn distribution, {solutions, new_bound} = pass ->
+        new_state = state |> apply_distribution(distribution, buttons)
 
-      cond do
-        comb_state == goal -> [presses]
-        greater_than?(comb_state, goal) -> []
-        match?([], rem_affections) -> []
-        true -> solve_vector(comb_state, goal, rem_affections) |> Enum.map(& presses + &1)
-      end
-    end)
-    # |> Enum.min()
+        cond do
+          new_state == goal ->
+            {[depth + presses | solutions], min(new_bound, depth + presses)}
 
-    # actions
-    # |> Enum.reduce(min, fn action, new_min ->
-    #   new_state = add(state, action)
-    #
-    #   cond do
-    #     new_state == goal ->
-    #       min(new_count, min)
-    #
-    #     greater_than?(new_state, goal) ->
-    #       new_min
-    #
-    #     true ->
-    #       min(count + solve_vector(new_state, goal, actions, new_count, new_min), new_min)
-    #   end
-    # end)
+          greater_than?(new_state, goal) ->
+            pass
+
+          true ->
+            {rec_solutions, rec_bound} =
+              solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)
+
+            {rec_solutions |> Enum.concat(solutions), min(new_bound, rec_bound)}
+        end
+      end)
+    end
   end
 
   def affection_map(actions) do
     for idx <- 0..(tuple_size(hd(actions)) - 1), into: %{} do
       {idx, actions |> Enum.filter(&(elem(&1, idx) == 1))}
     end
+  end
+
+  def apply_distribution(state, distribution, buttons) do
+    distribution
+    |> Enum.with_index()
+    |> Enum.reduce(state, fn {factor, idx}, s ->
+      add(s, mul(Enum.at(buttons, idx), factor))
+    end)
   end
 
   def distribute(0, 0), do: [[]]

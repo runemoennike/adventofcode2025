@@ -134,12 +134,17 @@ defmodule Day10Test do
     assert [[0, 2], [1, 1], [2, 0]] == distribute(2, 2)
   end
 
+  test "apply distribution" do
+    assert {1} == apply_distribution({0}, [1], [{1}])
+    assert {2, 2} == apply_distribution({0, 0}, [2, 2], [{1, 0}, {0, 1}])
+    assert {1, 2, 3} == apply_distribution({0, 0, 0}, [1, 0, 2], [{1, 0, 1}, {0, 1, 0}, {0, 1, 1}])
+  end
+
   test "part2 example", %{input: input} do
     result = input |> parse() |> part2()
 
     assert 33 == result
   end
-
 
   test "part2" do
     input = File.read!("./puzzle_input/day_10.txt")
