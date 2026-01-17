@@ -81,7 +81,7 @@ defmodule Day10 do
   def part2(problems) do
     problems
     |> Enum.sum_by(fn %{reqs: goal, action_vectors: actions} ->
-      solve_vector(goal, actions) |> Enum.min()
+      solve_vector(goal, actions)
     end)
   end
 
@@ -93,20 +93,18 @@ defmodule Day10 do
     # recursion level.
     affections =
       affection_map(actions)
-      |> Map.to_list()
-      |> Enum.sort_by(fn {jidx, buttons} -> {length(buttons), -elem(goal, jidx)} end)
+      |> Enum.sort_by(fn {jidx, _buttons, num_buttons} -> {num_buttons, -elem(goal, jidx)} end)
 
     state = Tuple.duplicate(0, tuple_size(goal))
 
     solve_vector(state, goal, affections, 0, nil)
     |> IO.inspect()
-    |> elem(0)
   end
 
-  def solve_vector(_state, _goal, [], _depth, _bound), do: {[], nil}
+  def solve_vector(_state, _goal, [], _depth, bound), do: bound
 
   # Heavily inspired by https://github.com/michel-kraemer/adventofcode-rust/blob/main/2025/day10/src/main.rs
-  def solve_vector(state, goal, [{jidx, buttons} | rem_affections], depth, bound) do
+  def solve_vector(state, goal, [{jidx, buttons, num_buttons} | rem_affections], depth, bound) do
     # Since each button can affect a slot with a value of no more than one, 
     # we know we must press these buttons exactly as many times as the joltages required
     # for the given slot. We just don't know which combination of affeting buttons to use.
@@ -115,45 +113,38 @@ defmodule Day10 do
     presses = jolt_max - jolt_state
 
     if depth + presses >= bound do
-      {[], nil}
+      bound
     else
-      # TODO: Remove solutions list, keep only bound
-
       # Try all possible ways to combine the required presses using the available buttons.
-      distribute(length(buttons), presses)
-      |> Enum.reduce({[], bound}, fn distribution, {solutions, new_bound} = pass ->
+      distribute(num_buttons, presses)
+      |> Enum.reduce(bound, fn distribution, new_bound = pass ->
         new_state = state |> apply_distribution(distribution, buttons)
 
         cond do
           new_state == goal ->
-            {[depth + presses | solutions], min(new_bound, depth + presses)}
+            min(new_bound, depth + presses)
 
           greater_than?(new_state, goal) ->
             pass
 
           true ->
-            {rec_solutions, rec_bound} =
-              solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)
-
-            {rec_solutions |> Enum.concat(solutions), min(new_bound, rec_bound)}
+            solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)
         end
       end)
     end
   end
 
   def affection_map(actions) do
-    for idx <- 0..(tuple_size(hd(actions)) - 1), into: %{} do
-      {idx, actions |> Enum.filter(&(elem(&1, idx) == 1))}
+    for idx <- 0..(tuple_size(hd(actions)) - 1) do
+      filtered_actions = actions |> Enum.filter(&(elem(&1, idx) == 1))
+      {idx, filtered_actions, length(filtered_actions)}
     end
   end
 
-  def apply_distribution(state, distribution, buttons) do
-    distribution
-    |> Enum.with_index()
-    |> Enum.reduce(state, fn {factor, idx}, s ->
-      add(s, mul(Enum.at(buttons, idx), factor))
-    end)
-  end
+  def apply_distribution(acc, [], []), do: acc
+
+  def apply_distribution(acc, [factor | fs], [btn | bs]),
+    do: apply_distribution(add(acc, mul(btn, factor)), fs, bs)
 
   def distribute(0, 0), do: [[]]
   def distribute(0, _), do: []
