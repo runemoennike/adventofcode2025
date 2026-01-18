@@ -148,11 +148,11 @@ defmodule Day10Test do
     assert 33 == result
   end
 
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_10.txt")
-  #
-  #   result = input |> parse() |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+  test "part2" do
+    input = File.read!("./puzzle_input/day_10.txt")
+
+    result = input |> parse() |> part2()
+
+    IO.puts("Part 2: #{result}")
+  end
 end

@@ -93,7 +93,7 @@ defmodule Day10 do
     # recursion level.
     affections =
       affection_map(actions)
-      |> Enum.sort_by(fn {jidx, _buttons, num_buttons} -> {num_buttons, -elem(goal, jidx)} end)
+      |> Enum.sort_by(fn {jidx, _buttons, num_buttons} -> {num_buttons, elem(goal, jidx)} end)
 
     state = Tuple.duplicate(0, tuple_size(goal))
 
@@ -117,18 +117,18 @@ defmodule Day10 do
     else
       # Try all possible ways to combine the required presses using the available buttons.
       distribute(num_buttons, presses)
-      |> Enum.reduce(bound, fn distribution, new_bound = pass ->
+      |> Enum.reduce_while(bound, fn distribution, new_bound ->
         new_state = state |> apply_distribution(distribution, buttons)
 
         cond do
           new_state == goal ->
-            min(new_bound, depth + presses)
+            {:halt, min(new_bound, depth + presses)} # Don't we already know depth + presses < bound? Any bound found from recursion must be larger.
 
           greater_than?(new_state, goal) ->
-            pass
+            {:cont, new_bound}
 
           true ->
-            solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)
+            {:cont, solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)}
         end
       end)
     end
