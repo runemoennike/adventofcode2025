@@ -111,6 +111,7 @@ defmodule Day10 do
     jolt_max = elem(goal, jidx)
     jolt_state = elem(state, jidx)
     presses = jolt_max - jolt_state
+    new_depth = depth + presses
 
     if depth + presses >= bound do
       bound
@@ -122,13 +123,16 @@ defmodule Day10 do
 
         cond do
           new_state == goal ->
-            {:halt, min(new_bound, depth + presses)} # Don't we already know depth + presses < bound? Any bound found from recursion must be larger.
+            IO.puts(new_depth)
+
+            # Don't we already know depth + presses < bound? Any bound found from recursion must be larger.
+            {:halt, min(new_bound, new_depth)}
 
           greater_than?(new_state, goal) ->
             {:cont, new_bound}
 
           true ->
-            {:cont, solve_vector(new_state, goal, rem_affections, depth + presses, new_bound)}
+            {:cont, solve_vector(new_state, goal, rem_affections, new_depth, new_bound)}
         end
       end)
     end
@@ -146,9 +150,24 @@ defmodule Day10 do
   def apply_distribution(acc, [factor | fs], [btn | bs]),
     do: apply_distribution(add(acc, mul(btn, factor)), fs, bs)
 
-  def distribute(0, 0), do: [[]]
-  def distribute(0, _), do: []
+  def distribute(num_buckets, sum) do
+    Stream.resource(
+      fn -> [{num_buckets, sum, []}] end,
+      fn
+        [] ->
+          {:halt, []}
 
-  def distribute(num_buckets, sum),
-    do: for(x <- 0..sum, rest <- distribute(num_buckets - 1, sum - x), do: [x | rest])
+        [{1, sum, acc} | rest] ->
+          {[[sum | acc]], rest}
+
+        [{n, sum, acc} | rest] ->
+          next =
+            for x <- 0..sum,
+                do: {n - 1, sum - x, [x | acc]}
+
+          {[], next ++ rest}
+      end,
+      fn _ -> :ok end
+    )
+  end
 end

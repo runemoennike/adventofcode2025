@@ -128,10 +128,10 @@ defmodule Day10Test do
   end
 
   test "distribute" do
-    assert [[1]] == distribute(1, 1)
-    assert [[0, 1], [1, 0]] == distribute(2, 1)
-    assert [[0, 0, 1], [0, 1, 0], [1, 0, 0]] == distribute(3, 1)
-    assert [[0, 2], [1, 1], [2, 0]] == distribute(2, 2)
+    assert [[1]] == distribute(1, 1) |> Enum.to_list()
+    assert [[1, 0], [0, 1]] == distribute(2, 1) |> Enum.to_list()
+    assert [[1, 0, 0], [0, 1, 0], [0, 0, 1]] == distribute(3, 1) |> Enum.to_list()
+    assert [[2, 0], [1, 1], [0, 2]] == distribute(2, 2) |> Enum.to_list()
   end
 
   test "apply distribution" do
@@ -148,11 +148,11 @@ defmodule Day10Test do
     assert 33 == result
   end
 
-  test "part2" do
-    input = File.read!("./puzzle_input/day_10.txt")
-
-    result = input |> parse() |> part2()
-
-    IO.puts("Part 2: #{result}")
-  end
+  # test "part2" do
+  #   input = File.read!("./puzzle_input/day_10.txt")
+  #
+  #   result = input |> parse() |> Enum.drop(9) |> part2()
+  #
+  #   IO.puts("Part 2: #{result}")
+  # end
 end
