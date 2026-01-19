@@ -1,6 +1,9 @@
 defmodule Day10 do
+  require Logger
   import Bitwise
   use Helpers.TupleOps
+
+  Logger.configure_backend(:console, format: "[$level] $message\n")
 
   def parse(input) do
     input
@@ -80,14 +83,23 @@ defmodule Day10 do
 
   def part2(problems) do
     problems
-    |> Enum.sum_by(fn %{reqs: goal, action_vectors: actions} ->
-      solve_vector(goal, actions)
+    |> Task.async_stream(
+      fn %{reqs: goal, action_vectors: actions} ->
+        Logger.info("Starting #{inspect(goal)}")
+
+        solve_vector(goal, actions)
+        |> then(fn n -> Logger.info("Solved #{inspect(goal)}: #{n}") end)
+      end,
+      max_concurrency: System.schedulers_online(),
+      timeout: :infinity
+    )
+    |> Enum.reduce(0, fn
+      {:ok, value}, acc -> acc + value
+      {:exit, _}, acc -> acc
     end)
   end
 
   def solve_vector(goal, actions) do
-    IO.inspect(goal, label: "SOLVING")
-
     # We want to visit as few states as possibl, so try the joltages with fewest butons affecting
     # them first. Fewer buttons affecting a joltage results in fewer states to branch frem as each
     # recursion level.
