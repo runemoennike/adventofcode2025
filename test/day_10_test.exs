@@ -85,6 +85,15 @@ defmodule Day10Test do
       assert s == sub(t, t)
     end
   end
+  
+  test "tuple elementwise multiply accumulate" do
+    for l <- 1..10 do
+      a = Tuple.duplicate(1, l)
+      b = 1..l |> Enum.to_list() |> List.to_tuple()
+      result = (for r <- 1..l, do: 1 + r * l) |> List.to_tuple
+      assert result == mac(a, b, l)
+    end
+  end
 
   test "tuple elementwise greater than" do
     for l <- 1..10 do
@@ -148,11 +157,14 @@ defmodule Day10Test do
     assert 33 == result
   end
 
-  # test "part2" do
-  #   input = File.read!("./puzzle_input/day_10.txt")
-  #
-  #   result = input |> parse() |> Enum.drop(9) |> part2()
-  #
-  #   IO.puts("Part 2: #{result}")
-  # end
+  test "part2" do
+    :eprof.start_profiling([self()])
+    input = File.read!("./puzzle_input/day_10.txt")
+
+    result = input |> parse() |> Enum.take(2) |> part2()
+
+    IO.puts("Part 2: #{result}")
+    :eprof.stop_profiling()
+    :eprof.analyze()
+  end
 end

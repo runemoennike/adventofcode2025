@@ -148,7 +148,7 @@ defmodule Day10 do
   def apply_distribution(acc, [], []), do: acc
 
   def apply_distribution(acc, [factor | fs], [btn | bs]),
-    do: apply_distribution(add(acc, mul(btn, factor)), fs, bs)
+    do: apply_distribution(mac(acc, btn, factor), fs, bs)
 
   def distribute(num_buckets, sum) do
     Stream.resource(

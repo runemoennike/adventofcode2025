@@ -1,11 +1,4 @@
 defmodule Helpers.TupleOps do
-  @moduledoc """
-  Generates tuple operations for sizes 1..10:
-    * add/2
-    * sub/2
-    * greater_than?/2
-  """
-
   defmacro __using__(_opts) do
     quote do
       unquote(Helpers.TupleOps.__defs__())
@@ -22,7 +15,7 @@ defmodule Helpers.TupleOps do
 
         a_tuple = {:{}, [], a_vars}
         b_tuple = {:{}, [], b_vars}
-        b_scalar = Macro.var(:b, nil)
+        s_scalar = Macro.var(:s, nil)
 
         add_tuple =
           {:{}, [],
@@ -33,11 +26,16 @@ defmodule Helpers.TupleOps do
           {:{}, [],
            Enum.zip(a_vars, b_vars)
            |> Enum.map(fn {a, b} -> {:*, meta, [a, b]} end)}
+        
+        mac_tuple_tuple_scalar =
+          {:{}, [],
+           Enum.zip(a_vars, b_vars)
+           |> Enum.map(fn {a, b} -> {:+, meta, [a, {:*, meta, [b, s_scalar]}]} end)}
 
         mul_scalar =
           {:{}, [],
            a_vars
-           |> Enum.map(fn a -> {:*, meta, [a, b_scalar]} end)}
+           |> Enum.map(fn a -> {:*, meta, [a, s_scalar]} end)}
 
         sub_tuple =
           {:{}, [],
@@ -57,8 +55,9 @@ defmodule Helpers.TupleOps do
         quote do
           def add(unquote(a_tuple), unquote(b_tuple)), do: unquote(add_tuple)
           def mul(unquote(a_tuple), unquote(b_tuple)), do: unquote(mul_tuple)
-          def mul(unquote(a_tuple), unquote(b_scalar)), do: unquote(mul_scalar)
+          def mul(unquote(a_tuple), unquote(s_scalar)), do: unquote(mul_scalar)
           def sub(unquote(a_tuple), unquote(b_tuple)), do: unquote(sub_tuple)
+          def mac(unquote(a_tuple), unquote(b_tuple), unquote(s_scalar)), do: unquote(mac_tuple_tuple_scalar)
           def greater_than?(unquote(a_tuple), unquote(b_tuple)), do: unquote(any_tuple)
         end
       end
