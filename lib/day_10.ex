@@ -88,7 +88,7 @@ defmodule Day10 do
         Logger.info("Starting #{inspect(goal)}")
 
         solve_vector(goal, actions)
-        |> then(fn n -> Logger.info("Solved #{inspect(goal)}: #{n}") end)
+        |> tap(fn n -> Logger.info("Solved #{inspect(goal)}: #{n}") end)
       end,
       max_concurrency: System.schedulers_online(),
       timeout: :infinity
@@ -110,7 +110,6 @@ defmodule Day10 do
     state = Tuple.duplicate(0, tuple_size(goal))
 
     solve_vector(state, goal, affections, 0, nil)
-    |> IO.inspect()
   end
 
   def solve_vector(_state, _goal, [], _depth, bound), do: bound
@@ -135,8 +134,6 @@ defmodule Day10 do
 
         cond do
           new_state == goal ->
-            IO.puts(new_depth)
-
             # Don't we already know depth + presses < bound? Any bound found from recursion must be larger.
             {:halt, min(new_bound, new_depth)}
 
