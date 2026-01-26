@@ -157,14 +157,28 @@ defmodule Day10Test do
     assert 33 == result
   end
 
-  test "part2" do
-    :eprof.start_profiling([self()])
+  # test "part2" do
+  #   :eprof.start_profiling([self()])
+  #   input = File.read!("./puzzle_input/day_10.txt")
+  #
+  #   result = input |> parse() |> part2()
+  #
+  #   IO.puts("Part 2: #{result}")
+  #   :eprof.stop_profiling()
+  #   :eprof.analyze()
+  # end
+  
+  test "part2 z3 example", %{input: input} do
+    result = input |> parse() |> part2_z3()
+
+    assert 33 == result
+  end
+
+  test "part2 z3" do
     input = File.read!("./puzzle_input/day_10.txt")
 
-    result = input |> parse() |> part2()
+    result = input |> parse() |> part2_z3()
 
     IO.puts("Part 2: #{result}")
-    :eprof.stop_profiling()
-    :eprof.analyze()
   end
 end

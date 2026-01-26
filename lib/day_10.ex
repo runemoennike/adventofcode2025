@@ -45,6 +45,10 @@ defmodule Day10 do
 
   def integer_tokens(input), do: input |> String.split(",") |> Enum.map(&String.to_integer/1)
 
+  #
+  # Part 1
+  #
+
   def part1(problems) do
     problems
     |> Enum.sum_by(fn %{goal: goal, action_bitmaps: actions} ->
@@ -80,6 +84,10 @@ defmodule Day10 do
       end
     end)
   end
+
+  #
+  # Part 2 - attempt with bounded DFS
+  #
 
   def part2(problems) do
     problems
@@ -178,5 +186,70 @@ defmodule Day10 do
       end,
       fn _ -> :ok end
     )
+  end
+
+  #
+  # Part 2 using z3 solver, from https://elixirforum.com/t/advent-of-code-2025-day-10/73612/5
+  #
+
+  def part2_z3(problems) do
+    problems
+    |> Task.async_stream(
+      fn %{reqs: goal, action_vectors: actions} ->
+        Logger.info("Starting #{inspect(goal)}")
+
+        solve_z3(goal, actions)
+        |> tap(fn n -> Logger.info("Solved #{inspect(goal)}: #{n}") end)
+      end,
+      max_concurrency: System.schedulers_online(),
+      ordered: false,
+      timeout: 60000
+    )
+    |> Enum.sum_by(&elem(&1, 1))
+  end
+
+  defp solve_z3(goal, actions) do
+    vars = for i <- 0..length(actions), do: String.to_atom("x#{i}")
+    action_to_vars = actions |> Enum.zip(vars) |> Map.new()
+
+    declarations =
+      Enum.map(vars, fn arg -> "(declare-const #{arg} Int) (assert (>= #{arg} 0))" end)
+
+    assertions =
+      affection_map(actions)
+      |> Enum.map(fn {jidx, as, _len} ->
+        "(assert (= #{elem(goal, jidx)} (+ #{as |> Enum.map(&action_to_vars[&1]) |> Enum.join(" ")})))"
+      end)
+      |> Enum.join(" ")
+
+    command =
+      """
+      #{declarations}
+      #{assertions}
+      (define-fun sum () Int (+ #{Enum.join(vars, " ")}))
+      (minimize sum)
+      (check-sat)
+      (get-value (sum))
+      """
+
+    z3 = System.find_executable("z3")
+    port = Port.open({:spawn_executable, z3}, [:binary, args: ["-in"]])
+    send(port, {self(), {:command, command}})
+
+    result = receive_result(port)
+    true = Port.close(port)
+    result
+  end
+
+  defp receive_result(port, acc \\ "") do
+    receive do
+      {^port, {:data, data}} ->
+        buf = acc <> data
+
+        case Regex.run(~r/\(\(sum\s+(-?\d+)\)\)/, buf) do
+          [_, num] -> String.to_integer(num)
+          _ -> receive_result(port, buf)
+        end
+    end
   end
 end
